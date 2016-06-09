@@ -3,11 +3,33 @@
  **********************************************************************************************/
 /** Map relative paths to URLs. */
 const map: any = {
+  '@angular2-material': 'vendor/@angular2-material'
 };
 
 /** User packages configuration. */
-const packages: any = {
-};
+const packages: any = { };
+
+const materialPkgs: string[] = [
+  'button',
+  'card',
+  'checkbox',
+  'core',
+  'grid-list',
+  'icon',
+  'input',
+  'list',
+  'progress-bar',
+  'progress-circle',
+  'radio',
+  'sidenav',
+  'slide-toggle',
+  'tabs',
+  'toolbar'
+];
+
+materialPkgs.forEach((pkg) => {
+  packages[`@angular2-material/${pkg}`] = { format: 'cjs', defaultExtension: 'js', main: `${pkg}.js` };
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 /***********************************************************************************************
@@ -32,6 +54,8 @@ const barrels: string[] = [
   'app/+login',
   'app/+register',
   'app/+home',
+  'app/user-tile',
+  'app/week-tile',
   /** @cli-barrel */
 ];
 

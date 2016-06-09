@@ -7,12 +7,38 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class WeekService {
 
-  constructor(private http: Http) {}
+    constructor(private http: Http) { }
 
-    getWeek(weekId: number, force = false) : Observable<Week[]> {
-        return this.http.get('https://api.myjson.com/bins/2yn6g')
+    getAllWeeks(): Observable<Week[]> {
+        return this.http.get('http://localhost:5000/api/weeks')
             .map((res: Response) => res.json());
     }
+
+    getWeek(weekId: number, force = false): Observable<Week> {
+        return this.http.get(`http://localhost:5000/api/weeks/${weekId}`)
+            .map((res: Response) => res.json());
+    }
+
+    weekIdToDate(weekId: number): Date {
+        // seconds = weekId * days in a week * hours in a day * minutes in an hours * seconds in a minute * milliseconds in a second
+        var seconds = weekId * 7 * 24 * 60 * 60 * 1000;
+
+        var date = this.getStartOfWeek(new Date(seconds));
+
+        return date;
+    };
+
+    getCurrentWeekId(): number {
+        var startOfWeek = this.getStartOfWeek(new Date());
+
+        return Math.ceil(startOfWeek.getTime() / 1000 / 60 / 60 / 24 / 7);
+    };
+
+    getStartOfWeek(week: Date): Date {
+        var copy = new Date(week.valueOf());
+        copy.setDate(copy.getDate() - ((copy.getDay() + 6)%7));
+        return copy;
+    };
 
 }
 

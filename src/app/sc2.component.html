@@ -1,4 +1,4 @@
-<h1>
+<!--<h1>
   {{title}}
 </h1>
 
@@ -8,4 +8,37 @@
   <a [routerLink]="['register']">Register</a>
 </nav>
 
-<router-outlet></router-outlet>
+<router-outlet></router-outlet>-->
+
+
+<md-sidenav-layout fullscreen>
+  <md-sidenav #sidenav>
+    <md-nav-list>
+      <a md-list-item [routerLink]="['login']">
+        <md-icon md-list-icon>input</md-icon>
+        <span md-line>Login</span>
+        </a>
+      <a md-list-item [routerLink]="['home']">
+        <md-icon md-list-icon>home</md-icon>
+        <span md-line>Home</span>
+        </a>
+      <a md-list-item [routerLink]="['register']">
+        <md-icon md-list-icon>person_add</md-icon>
+        <span md-line>Register</span>
+        </a>
+      <!--<a md-list-item *ngFor="let view of views">
+        <md-icon md-list-icon>{{view.icon}}</md-icon>
+        <span md-line>{{view.name}}</span>
+        <span md-line>{{view.description}}</span>
+      </a>-->
+    </md-nav-list>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="sidenav.open()">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+          </svg>
+        </button> Sandwich Club 2
+  </md-toolbar>
+  <router-outlet></router-outlet>
+</md-sidenav-layout>
