@@ -19,8 +19,8 @@ md-slide-toggle {
 md-icon {
     position: absolute;
     right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 16px;
+    transform: rotateZ(0deg);
     -webkit-transition: transform 0.2s ease-in-out;
     -moz-transition: transform 0.2s ease-in-out;
     transition: transform 0.2s ease-in-out;
@@ -47,5 +47,5 @@ md-card:hover md-icon {
 
 md-card.selected md-icon {
     color: rgb(0, 150, 136);
-    transform: translateY(-50%) rotateZ(45deg);
+    transform: rotateZ(135deg);
 }
