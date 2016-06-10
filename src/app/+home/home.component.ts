@@ -2,14 +2,13 @@
 import { Component, OnInit } from '@angular/core';
 
 // User
-import { UserService } from '../user/user.service';
 import { User } from '../user/user.model';
-import { UserTileComponent } from '../user-tile/user-tile.component';
+import { UserService } from '../user/user.service';
+import { UserTileComponent } from '../user-tile';
 
 // Week
-import { WeekService } from '../week/week.service';
-import { Week } from '../week/week.model';
-import { WeekTileComponent } from '../week-tile/week-tile.component';
+import { Week, WeekService } from '../week/index';
+import { WeekTileComponent } from '../week-tile';
 
 @Component({
     moduleId: module.id,

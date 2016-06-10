@@ -2,6 +2,7 @@ md-card {
     margin: 16px;
     width: 300px;
     display: inline-block;
+    top: 0px;
 }
 
 img {
@@ -13,4 +14,38 @@ img {
 md-slide-toggle {
     display: inline-flex;
     margin-left: 20px;
+}
+
+md-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transition: transform 0.2s ease-in-out;
+    -moz-transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease-in-out;
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    color: rgba(0,0,0,0.32);
+}
+
+md-card:hover {
+    cursor: pointer;
+
+    box-shadow: 0px 3px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    -webkit-transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), top 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), top 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: box-shadow, top;
+
+    top: -1px;
+}
+
+md-card:hover md-icon {
+    color: rgba(0,0,0,0.54);
+}
+
+md-card.selected md-icon {
+    color: rgb(0, 150, 136);
+    transform: translateY(-50%) rotateZ(45deg);
 }

@@ -1,10 +1,11 @@
-<md-card>
+<md-card [ngClass]="{selected: selected}" (click)="didClick()">
     <md-card-header>
         <img md-card-avatar src="{{user.AvatarUrl}}">
         <md-card-title>{{user.FirstName}} {{user.LastName}}</md-card-title>
         <md-card-subtitle>{{10 | currency}}</md-card-subtitle>
     </md-card-header>
+    <md-icon md-list-icon>add_circle</md-icon>
     <md-card-actions align="end">
-        <button md-button color="primary">JOIN WEEK</button>
+        <button md-button color="primary">PAID</button>
     </md-card-actions>
 </md-card>
