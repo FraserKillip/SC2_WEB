@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Week } from "./week.model";
+import { WeekUserLink } from './weekUserLink.model';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class WeekService {
+
+    private headers = new Headers({ 'Content-Type': 'application/json' });
+    private options = new RequestOptions({ headers: this.headers });
 
     constructor(private http: Http) { }
 
@@ -39,6 +43,11 @@ export class WeekService {
         copy.setDate(copy.getDate() - ((copy.getDay() + 6)%7));
         return copy;
     };
+
+    updateLink(weekId: number, link: WeekUserLink): Observable<WeekUserLink> {
+        return this.http.post(`http://localhost:5000/api/weeks/${weekId}/link`, JSON.stringify(link), this.options)
+            .map((res: Response) => res.json());
+    }
 
 }
 

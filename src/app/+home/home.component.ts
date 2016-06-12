@@ -1,5 +1,6 @@
 // Angular
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 // User
 import { User } from '../user/user.model';
@@ -20,7 +21,7 @@ import { WeekTileComponent } from '../week-tile';
 })
 export class HomeComponent implements OnInit {
     private currentWeekId: number;
-    public week: Week;
+    public week: Observable<Week>;
     public users: User[];
 
     constructor(private weekService: WeekService, private userService: UserService) {
@@ -28,12 +29,11 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.weekService.getWeek(this.currentWeekId).subscribe((a: Week) => this.week = a);
+        this.week = this.weekService.getWeek(this.currentWeekId);//.subscribe((a: Week) => this.week = a);
         this.userService.getAllUsers().subscribe((u:User[]) => this.users = u);
     }
 
-    loadWeeks() {
-        this.weekService.getWeek(++this.currentWeekId).subscribe((a: Week) => this.week = a);
+    linkUpdated(event) {
+        this.weekService.updateLink(this.currentWeekId, event.value).subscribe(a => console.log(a));
     }
-
 }

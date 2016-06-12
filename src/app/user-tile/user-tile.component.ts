@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {NgClass} from '@angular/common';
 
 import { MD_CARD_DIRECTIVES } from '@angular2-material/card';
@@ -6,7 +6,9 @@ import { MD_SLIDE_TOGGLE_DIRECTIVES } from '@angular2-material/slide-toggle';
 import { MD_BUTTON_DIRECTIVES } from '@angular2-material/button';
 import { MD_ICON_DIRECTIVES } from  '@angular2-material/icon';
 
-import { User } from "../user/user.model";
+import { User } from '../user/user.model';
+import { WeekUserLink } from '../week/weekUserLink.model';
+import { WeekService } from '../week/week.service';
 
 @Component({
     moduleId: module.id,
@@ -17,17 +19,20 @@ import { User } from "../user/user.model";
 })
 export class UserTileComponent implements OnInit {
 
-    public selected: boolean = false;
+    @Input() link: WeekUserLink;
 
-    @Input() user: User;
+    @Output() linkUpdated = new EventEmitter();
 
-    constructor() { }
+    constructor(private weekService: WeekService) { }
 
     ngOnInit() {
     }
 
     didClick() {
-        this.selected = !this.selected;
+        this.link.Slices = this.link.Slices > 0 ? 0 : 1;
+        this.linkUpdated.emit({
+            value: this.link
+        })
     }
 
 }

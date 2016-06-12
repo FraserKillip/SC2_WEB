@@ -1,3 +1,3 @@
-<week-tile [week]="week"></week-tile>
+<week-tile [week]="week | async"></week-tile>
 
-<user-tile [user]="user" *ngFor="let user of users"></user-tile>
+<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>
