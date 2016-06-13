@@ -1,4 +1,5 @@
 # SC2_WEB
+[![Build Status](https://travis-ci.org/FraserKillip/SC2_WEB.svg?branch=master)](https://travis-ci.org/FraserKillip/SC2_WEB)
 
 Install Angular CLI
 ```
