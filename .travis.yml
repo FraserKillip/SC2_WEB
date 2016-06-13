@@ -8,4 +8,4 @@ before_script:
   - npm install -g angular-cli
 script:
   - ng lint
-  - ng test --browsers Firefox --single-run
+  - ng test --browsers Firefox -w false
