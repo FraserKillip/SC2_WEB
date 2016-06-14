@@ -10,11 +10,13 @@ import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testin
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { WeekTileComponent } from './week-tile.component';
+import { WeekService } from '../week/week.service';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 describe('Component: WeekTile', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [WeekTileComponent]);
+  beforeEachProviders(() => [WeekTileComponent, WeekService, HTTP_PROVIDERS]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
@@ -37,7 +39,7 @@ describe('Component: WeekTile', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-week-tile></app-week-tile>
+    <week-tile></week-tile>
   `,
   directives: [WeekTileComponent]
 })

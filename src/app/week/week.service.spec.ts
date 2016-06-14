@@ -3,12 +3,15 @@ import {
   it,
   describe,
   expect,
-  inject
+  inject,
 } from '@angular/core/testing';
+import { HTTP_PROVIDERS } from '@angular/http';
+
+
 import { WeekService } from './week.service';
 
 describe('Week Service', () => {
-  beforeEachProviders(() => [WeekService]);
+  beforeEachProviders(() => [WeekService, HTTP_PROVIDERS]);
 
   it('should ...',
       inject([WeekService], (service: WeekService) => {

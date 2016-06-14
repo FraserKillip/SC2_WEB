@@ -10,11 +10,14 @@ import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testin
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { HomeComponent } from './home.component';
+import { WeekService } from '../week/week.service';
+import { UserService } from '../user/user.service';
+import { HTTP_PROVIDERS } from '@angular/http';
 
 describe('Component: Home', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [HomeComponent]);
+  beforeEachProviders(() => [HomeComponent, HTTP_PROVIDERS, WeekService, UserService]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));

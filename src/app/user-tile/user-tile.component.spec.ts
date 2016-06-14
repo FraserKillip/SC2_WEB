@@ -10,11 +10,14 @@ import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testin
 import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { UserTileComponent } from './user-tile.component';
+import { WeekService } from '../week/week.service';
+import { HTTP_PROVIDERS } from '@angular/http';
+import { MdIconRegistry } from  '@angular2-material/icon';
 
 describe('Component: UserTile', () => {
   let builder: TestComponentBuilder;
 
-  beforeEachProviders(() => [UserTileComponent]);
+  beforeEachProviders(() => [UserTileComponent, WeekService, HTTP_PROVIDERS, MdIconRegistry]);
   beforeEach(inject([TestComponentBuilder], function (tcb: TestComponentBuilder) {
     builder = tcb;
   }));
@@ -37,7 +40,7 @@ describe('Component: UserTile', () => {
 @Component({
   selector: 'test',
   template: `
-    <app-user-tile></app-user-tile>
+    <user-tile></user-tile>
   `,
   directives: [UserTileComponent]
 })
