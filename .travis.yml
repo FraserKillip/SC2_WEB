@@ -7,5 +7,6 @@ before_script:
   - sleep 3 # give xvfb some time to start
   - npm install -g angular-cli
 script:
+  - ng build
   # - ng lint
   - ng test --browsers Firefox -w false
