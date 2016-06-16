@@ -1,3 +1,28 @@
-<week-tile [week]="week | async"></week-tile>
+<md-sidenav-layout fullscreen>
+    <md-sidenav #sidenav>
+        <md-nav-list>
+            <a md-list-item [routerLink]="['login']">
+                <md-icon md-list-icon>input</md-icon>
+                <span md-line>Login</span>
+            </a>
+            <a md-list-item [routerLink]="['/']">
+                <md-icon md-list-icon>home</md-icon>
+                <span md-line>Home</span>
+            </a>
+            <a md-list-item [routerLink]="['register']">
+                <md-icon md-list-icon>person_add</md-icon>
+                <span md-line>Register</span>
+            </a>
+        </md-nav-list>
+    </md-sidenav>
+    <md-toolbar color="primary">
+        <button md-icon-button (click)="sidenav.open()">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" />
+          </svg>
+        </button> Sandwich Club 2
+    </md-toolbar>
+    <week-tile [week]="week | async"></week-tile>
 
-<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>
+    <user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>
+</md-sidenav-layout>

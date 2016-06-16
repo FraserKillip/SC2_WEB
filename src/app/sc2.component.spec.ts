@@ -14,9 +14,4 @@ describe('App: SC2', () => {
       inject([SC2AppComponent], (app: SC2AppComponent) => {
     expect(app).toBeTruthy();
   }));
-
-  it('should have as title \'sc2 works!\'',
-      inject([SC2AppComponent], (app: SC2AppComponent) => {
-    expect(app.title).toEqual('sc2 works!');
-  }));
 });
