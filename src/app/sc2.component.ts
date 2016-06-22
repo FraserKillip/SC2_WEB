@@ -3,6 +3,8 @@ import { LoginComponent } from './+login';
 import { Router, Routes , ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 import { RegisterComponent } from './+register';
 import { HomeComponent } from './+home';
+import { FacebookService } from './facebook/facebook.service';
+import { HttpService } from './http.service';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +13,7 @@ import { HomeComponent } from './+home';
   styleUrls: ['sc2.component.css'],
   directives: [
     ROUTER_DIRECTIVES],
-  providers: [ROUTER_PROVIDERS]
+  providers: [ROUTER_PROVIDERS, FacebookService, HttpService]
 })
 @Routes([
   {path: '/login', component: LoginComponent},
@@ -20,5 +22,7 @@ import { HomeComponent } from './+home';
 ])
 export class SC2AppComponent {
   // Router needs to be injected or it doesn't load...
-  constructor(private router: Router) {}
+  constructor(private router: Router, private fbService: FacebookService) {
+    this.fbService.init();
+  }
 }

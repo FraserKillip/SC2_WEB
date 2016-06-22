@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import 'rxjs/add/operator/map';
 import { User } from "./user.model";
 import { Observable } from 'rxjs/Observable';
+
+import { HttpService } from '../http.service';
 
 @Injectable()
 export class UserService {
 
-    constructor(private http: Http) { }
+    private resourcePath = 'users';
+
+    constructor(private client: HttpService<User>) {}
 
     getAllUsers(): Observable<User[]> {
-        return this.http.get('http://localhost:5000/api/users')
-            .map((res: Response) => res.json());
+        return this.client.getAll(this.resourcePath);
     }
 
-    getUser(userId: number, force = false): Observable<User> {
-        return this.http.get(`http://localhost:5000/api/users/${userId}`)
-            .map((res: Response) => res.json());
+    getUser(userId: number): Observable<User> {
+        return this.client.getSingle(this.resourcePath, userId.toString());
     }
 }

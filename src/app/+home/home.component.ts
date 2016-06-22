@@ -50,6 +50,6 @@ export class HomeComponent implements OnInit {
     }
 
     linkUpdated(event) {
-        this.weekService.updateLink(this.currentWeekId, event.value).subscribe(a => console.log(a));
+        // this.weekService.updateLink(this.currentWeekId, event.value).subscribe(a => console.log(a));
     }
 }

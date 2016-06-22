@@ -1,3 +1,5 @@
 export const environment = {
-  production: false
+  production: false,
+  apiAddress: 'http://localhost:5000',
+  fbAppId: '1616066795351311'
 };

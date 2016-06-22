@@ -5,22 +5,21 @@ import { Week } from "./week.model";
 import { WeekUserLink } from './weekUserLink.model';
 import { Observable } from 'rxjs/Observable';
 
+import { HttpService } from '../http.service';
+
 @Injectable()
 export class WeekService {
 
-    private headers = new Headers({ 'Content-Type': 'application/json' });
-    private options = new RequestOptions({ headers: this.headers });
+    private resourcePath = 'weeks';
 
-    constructor(private http: Http) { }
+    constructor(private client: HttpService<Week>) {}
 
     getAllWeeks(): Observable<Week[]> {
-        return this.http.get('http://localhost:5000/api/weeks')
-            .map((res: Response) => res.json());
+        return this.client.getAll(this.resourcePath);
     }
 
-    getWeek(weekId: number, force = false): Observable<Week> {
-        return this.http.get(`http://localhost:5000/api/weeks/${weekId}`)
-            .map((res: Response) => res.json());
+    getWeek(weekId: number): Observable<Week> {
+        return this.client.getSingle(this.resourcePath, weekId.toString());
     }
 
     weekIdToDate(weekId: number): Date {
@@ -44,10 +43,11 @@ export class WeekService {
         return copy;
     };
 
-    updateLink(weekId: number, link: WeekUserLink): Observable<WeekUserLink> {
-        return this.http.post(`http://localhost:5000/api/weeks/${weekId}/link`, JSON.stringify(link), this.options)
-            .map((res: Response) => res.json());
-    }
+    // updateLink(weekId: number, link: WeekUserLink): Observable<WeekUserLink> {
+    //     return this.client.getAll();
+    //     return this.http.post(`http://localhost:5000/api/weeks/${weekId}/link`, JSON.stringify(link), this.options)
+    //         .map((res: Response) => res.json());
+    // }
 
 }
 
