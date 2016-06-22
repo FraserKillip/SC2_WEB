@@ -45,7 +45,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.week = this.weekService.getWeek(this.currentWeekId);//.subscribe((a: Week) => this.week = a);
+        this.week = this.weekService.getWeek(this.currentWeekId); // .subscribe((a: Week) => this.week = a);
         this.userService.getAllUsers().subscribe((u: User[]) => this.users = u);
     }
 

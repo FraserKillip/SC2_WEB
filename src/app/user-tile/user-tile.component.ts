@@ -6,7 +6,6 @@ import { MD_SLIDE_TOGGLE_DIRECTIVES } from '@angular2-material/slide-toggle';
 import { MD_BUTTON_DIRECTIVES } from '@angular2-material/button';
 import { MD_ICON_DIRECTIVES } from  '@angular2-material/icon';
 
-import { User } from '../user/user.model';
 import { WeekUserLink } from '../week/weekUserLink.model';
 import { WeekService } from '../week/week.service';
 
@@ -32,7 +31,7 @@ export class UserTileComponent implements OnInit {
         this.link.Slices = this.link.Slices > 0 ? 0 : 1;
         this.linkUpdated.emit({
             value: this.link
-        })
+        });
     }
 
 }

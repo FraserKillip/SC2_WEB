@@ -30,7 +30,7 @@ export class FacebookService {
                 subscriber.next(response);
                 subscriber.complete();
             });
-        })
+        });
     }
 
     logout() {

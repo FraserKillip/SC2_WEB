@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { Week } from "./week.model";
-import { WeekUserLink } from './weekUserLink.model';
+import { Week } from './week.model';
 import { Observable } from 'rxjs/Observable';
 
 import { HttpService } from '../http.service';
@@ -24,22 +22,22 @@ export class WeekService {
 
     weekIdToDate(weekId: number): Date {
         // seconds = weekId * days in a week * hours in a day * minutes in an hours * seconds in a minute * milliseconds in a second
-        var seconds = weekId * 7 * 24 * 60 * 60 * 1000;
+        const seconds = weekId * 7 * 24 * 60 * 60 * 1000;
 
-        var date = this.getStartOfWeek(new Date(seconds));
+        const date = this.getStartOfWeek(new Date(seconds));
 
         return date;
     };
 
     getCurrentWeekId(): number {
-        var startOfWeek = this.getStartOfWeek(new Date());
+        const startOfWeek = this.getStartOfWeek(new Date());
 
         return Math.ceil(startOfWeek.getTime() / 1000 / 60 / 60 / 24 / 7);
     };
 
     getStartOfWeek(week: Date): Date {
-        var copy = new Date(week.valueOf());
-        copy.setDate(copy.getDate() - ((copy.getDay() + 6)%7));
+        const copy = new Date(week.valueOf());
+        copy.setDate(copy.getDate() - ((copy.getDay() + 6) % 7));
         return copy;
     };
 

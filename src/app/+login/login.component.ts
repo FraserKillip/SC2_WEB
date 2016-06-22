@@ -25,6 +25,6 @@ export class LoginComponent implements OnInit {
     }
 
     ngOnInit() {
-        //this.fbService.getStatus();
+        // this.fbService.getStatus();
     }
 }

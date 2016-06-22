@@ -27,7 +27,7 @@ export class HttpService<T> {
 
   getAll(resourcePath: string): Observable<T[]> {
     return this.fbObservable.mergeMap((response) => {
-      return this.http.get(`${environment.apiAddress}/${resourcePath}`, this.options)
+      return this.http.get(`${environment.apiAddress}/${resourcePath}`, this.options);
     })
       .map((res: Response) => res.json());
 
