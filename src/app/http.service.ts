@@ -19,7 +19,9 @@ export class HttpService<T> {
 
   constructor(private fbService: FacebookService, private http: Http) {
     this.fbObservable = fbService.getStatus().do(response => {
-      this.headers.append('Sandwich-Auth-Token', `facebook ${response.authResponse.accessToken}`);
+      if (response.status === 'connected') {
+        this.headers.append('Sandwich-Auth-Token', `facebook ${response.authResponse.accessToken}`);
+      }
     }).cache();
   }
 
