@@ -12,7 +12,7 @@
       "options": {
         "headers": {
           "user-agent": "JS GraphQL",
-          "Sandwich-Auth-Token": "facebook EAAV6wdp26tcBAJKLAfRGDvKYgrH7pe8Q3iI6gqjDsLwJLvl8BKa0RDvuwC5QsvpAXHUsXhuvMmWDiwJQRZCpLgLE9b11ftNju6IzV9Vg4NVRiHZCyrOe1YHts0JY2f02ZCrnStZB73r0lmKlqeGCYy3wpTHtDpCYZAZASbCZAOohAZDZD"
+          "Sandwich-Auth-Token": "graphql"
         }
       }
     }
@@ -25,7 +25,7 @@
       "options": {
         "headers": {
           "user-agent": "JS GraphQL",
-          "Sandwich-Auth-Token": "facebook EAAV6wdp26tcBAJKLAfRGDvKYgrH7pe8Q3iI6gqjDsLwJLvl8BKa0RDvuwC5QsvpAXHUsXhuvMmWDiwJQRZCpLgLE9b11ftNju6IzV9Vg4NVRiHZCyrOe1YHts0JY2f02ZCrnStZB73r0lmKlqeGCYy3wpTHtDpCYZAZASbCZAOohAZDZD"
+          "Sandwich-Auth-Token": "graphql"
         }
       }
     }

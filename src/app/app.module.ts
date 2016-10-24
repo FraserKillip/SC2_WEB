@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { loginState, homeState } from './app-states';
 import RouterConfig from './router-config';
+import WeekService from './week.service';
 
 const networkInterface = createNetworkInterface(`${environment.apiAddress}/graphql`);
 
@@ -29,6 +30,18 @@ networkInterface.use([{
 
 const client = new ApolloClient({
   networkInterface: networkInterface,
+  dataIdFromObject: (o: any) => {
+    switch (o.__typename) {
+      case 'user':
+        return `${o.__typename}-${o.userId},`;
+      case 'week':
+        return `${o.__typename}-${o.weekId},`;
+      case 'weekUserLink':
+        return `${o.__typename}-${o.weekId}-${o.userId},`;
+      default:
+        return `${o.__typename}-${o.id},`;
+    }
+  }
 });
 
 @NgModule({
@@ -48,7 +61,8 @@ const client = new ApolloClient({
   ],
   providers: [
     FacebookService,
-    defaultApolloClient(client)
+    defaultApolloClient(client),
+    WeekService
   ],
   bootstrap: [AppComponent]
 })

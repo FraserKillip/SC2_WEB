@@ -21,5 +21,9 @@
   <!--<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>-->
 
   <img [src]="me?.avatarUrl">
-  {{ me | json}}
+  <pre>{{ me | json}}</pre>
+  <br>
+  {{ weekId }}
+  <br>
+  <button (click)="subToWeek()">Do the thing!</button>
 </md-sidenav-layout>
