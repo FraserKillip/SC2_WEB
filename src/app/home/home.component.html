@@ -1,0 +1,25 @@
+<md-sidenav-layout fullscreen>
+  <md-sidenav #sidenav>
+    <md-nav-list>
+      <a md-list-item (click)="logout()">
+        <md-icon md-list-icon>input</md-icon>
+        <span md-line>Logout</span>
+      </a>
+    </md-nav-list>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="sidenav.open()">
+      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+        <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
+      </svg>
+    </button>
+    Sandwich Club 2
+  </md-toolbar>
+  <!--<user-tile [user]="me | async" (linkUpdated)="linkUpdated($event)"></user-tile>-->
+  <!--<week-tile [week]="week | async"></week-tile>-->
+
+  <!--<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>-->
+
+  <img [src]="me?.avatarUrl">
+  {{ me | json}}
+</md-sidenav-layout>

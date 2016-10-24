@@ -15,7 +15,8 @@
       "prefix": "sc",
       "mobile": false,
       "styles": [
-        "styles.less"
+        "styles.less",
+        "app/material-theme.scss"
       ],
       "scripts": [],
       "environments": {

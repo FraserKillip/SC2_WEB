@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiAddress: 'https://api.sandwichclub.tk',
+  fbAppId: '1542347896056535'
 };

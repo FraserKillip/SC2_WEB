@@ -2,21 +2,54 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AppRoutingModule } from './app-routing.module';
-
 import { AppComponent } from './app.component';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloModule, defaultApolloClient } from 'angular2-apollo';
+import { environment } from '../environments/environment';
+import { FacebookService } from './facebook/facebook.service';
+import { MaterialModule } from '@angular/material';
+import { UIRouterModule } from 'ui-router-ng2';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { loginState, homeState } from './app-states';
+import RouterConfig from './router-config';
+
+const networkInterface = createNetworkInterface(`${environment.apiAddress}/graphql`);
+
+networkInterface.use([{
+  applyMiddleware(req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {};  // Create the header object if needed.
+    }
+    // get the authentication token from local storage if it exists
+    req.options.headers['Sandwich-Auth-Token'] = localStorage.getItem('token') || null;
+    next();
+  }
+}]);
+
+const client = new ApolloClient({
+  networkInterface: networkInterface,
+});
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    // AppRoutingModule,
+    ApolloModule.withClient(client),
+    MaterialModule.forRoot(),
+    UIRouterModule.forRoot({states: [loginState, homeState], configClass: RouterConfig})
   ],
-  providers: [],
+  providers: [
+    FacebookService,
+    defaultApolloClient(client)
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
