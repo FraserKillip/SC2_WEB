@@ -28,6 +28,15 @@ networkInterface.use([{
   }
 }]);
 
+networkInterface.useAfter([{
+  applyAfterware({response}, next) {
+    if (response.status === 401) {
+      window.location.pathname = '/login';
+    }
+    next();
+  }
+}]);
+
 const client = new ApolloClient({
   networkInterface: networkInterface,
   dataIdFromObject: (o: any) => {

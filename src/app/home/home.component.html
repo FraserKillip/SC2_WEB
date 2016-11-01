@@ -19,11 +19,22 @@
   <!--<week-tile [week]="week | async"></week-tile>-->
 
   <!--<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>-->
+  <div class="content">
+    <md-card>
+      <md-card-header>
+        <img md-card-avatar [src]="me?.avatarUrl">
+        <md-card-title>{{me?.firstName}} {{me?.lastName}}</md-card-title>
+        <md-card-subtitle>Header subtitle</md-card-subtitle>
+      </md-card-header>
+      <md-card-content>
+        <p>Here is some more content</p>
+      </md-card-content>
+    </md-card>
 
-  <img [src]="me?.avatarUrl">
-  <pre>{{ me | json}}</pre>
-  <br>
-  {{ weekId }}
-  <br>
-  <button (click)="subToWeek()">Do the thing!</button>
+    <pre>{{ me | json}}</pre>
+    <br>
+    {{ weekId }}
+    <br>
+    <button (click)="subToWeek()">Do the thing!</button>
+  </div>
 </md-sidenav-layout>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacebookService } from '../facebook/facebook.service';
 import { StateService } from 'ui-router-ng2';
+import WeekService from '../week.service';
 
 @Component({
   selector: 'sc-login',
@@ -9,7 +10,7 @@ import { StateService } from 'ui-router-ng2';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private fbService: FacebookService, private stateService: StateService) {
+  constructor(private fbService: FacebookService, private stateService: StateService, private weekService: WeekService) {
   }
 
   ngOnInit() {
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
     this.fbService.login().subscribe((response: any) => {
       if (response.status === 'connected') {
         localStorage.setItem('token', `facebook ${response.authResponse.accessToken}`);
-        this.stateService.go('home');
+        this.stateService.go('home', {weekId: this.weekService.getCurrentWeekId()});
       }
     });
   }
