@@ -40,16 +40,25 @@ networkInterface.useAfter([{
 const client = new ApolloClient({
   networkInterface: networkInterface,
   dataIdFromObject: (o: any) => {
+    let key;
     switch (o.__typename) {
       case 'user':
-        return `${o.__typename}-${o.userId},`;
+        key = `${o.__typename}-${o.userId},`;
+        break;
       case 'week':
-        return `${o.__typename}-${o.weekId},`;
+        key = `${o.__typename}-${o.weekId},`;
+        break;
       case 'weekUserLink':
-        return `${o.__typename}-${o.weekId}-${o.userId},`;
+        key = `${o.__typename}-${o.weekId}-${o.userId},`;
+        break;
       default:
-        return `${o.__typename}-${o.id},`;
+        key = `${o.__typename}-${o.id},`;
+        break;
     }
+
+    console.log(key, o);
+
+    return key;
   }
 });
 

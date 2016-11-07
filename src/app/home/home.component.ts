@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MeQuery } from '../queries/Queries';
-import { Angular2Apollo } from 'angular2-apollo';
+import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
 import { FacebookService } from '../facebook/facebook.service';
 import { StateService } from 'ui-router-ng2';
 import WeekQuery from '../queries/WeekQuery';
 import SubscribeToWeekMutation from '../queries/SubscribeToWeekMutation';
 import UnpaidWeeksQuery from '../queries/UnpaidWeeksQuery';
 import { Observable } from 'rxjs';
+import { ApolloQueryResult } from 'apollo-client';
+import UpdateWeekMutation from '../queries/UpdateWeekMutation';
 
 @Component({
   selector: 'sc-home',
@@ -16,8 +18,11 @@ import { Observable } from 'rxjs';
 export class HomeComponent implements OnInit {
 
   @Input() weekId: number;
-  me: any;
+  meId: number;
+  me: ApolloQueryObservable<ApolloQueryResult>;
+  week: ApolloQueryObservable<ApolloQueryResult>;
   unpaidAmount: Observable<number>;
+  cost: number;
 
   constructor(private apolloClient: Angular2Apollo, private fbService: FacebookService, private stateService: StateService) {
   }
@@ -27,30 +32,17 @@ export class HomeComponent implements OnInit {
       this.stateService.go('login');
       return;
     }
-    this.apolloClient.watchQuery({query: MeQuery}).subscribe(({data}) => {
-      this.me = data.me;
-    });
+    this.me = this.apolloClient.watchQuery({query: MeQuery});
+    this.me.subscribe((result) => this.meId = result.data.me.userId);
 
     this.apolloClient.watchQuery({query: UnpaidWeeksQuery}).subscribe(({data}) => {
-      this.unpaidAmount = Observable.of(data.me.weeks).scan((acc, next): number => acc + next.week.cost, 0);
-      this.unpaidAmount.subscribe(
-        function (x) {
-          console.log('Next: %s', x);
-        },
-        function (err) {
-          console.log('Error: %s', err);
-        },
-        function () {
-          console.log('Completed');
-        });
+      this.unpaidAmount = Observable.from(data.me.weeks).scan((acc: number, next: any): number => acc + next.week.cost, 0) as Observable<number>;
     });
 
 
-    this.apolloClient.watchQuery({
+    this.week = this.apolloClient.watchQuery({
       query: WeekQuery,
       variables: {weekId: this.weekId}
-    }).subscribe(({data}) => {
-      console.log(data);
     });
   }
 
@@ -65,11 +57,27 @@ export class HomeComponent implements OnInit {
       variables: {
         slices: 1,
         weekId: this.weekId,
-        userId: this.me.userId
+        userId: this.meId
       }
     }).then(({data}) => {
       console.log(data);
     });
   }
 
+  refetch() {
+    this.me.refetch();
+  }
+
+  updateCost() {
+    this.apolloClient.mutate({
+      mutation: UpdateWeekMutation,
+      variables: {
+        cost: this.cost,
+        weekId: this.weekId,
+        shopperId: this.meId
+      }
+    }).then(({data}) => {
+      console.log(data);
+    });
+  }
 }

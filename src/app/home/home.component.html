@@ -21,20 +21,42 @@
   <!--<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>-->
   <div class="content">
     <md-card>
-      <md-card-header>
-        <img md-card-avatar [src]="me?.avatarUrl">
-        <md-card-title>{{me?.firstName}} {{me?.lastName}}</md-card-title>
+      <md-card-header *ngIf="me | async">
+        <img md-card-avatar [src]="(me | async)?.data.me.avatarUrl">
+        <md-card-title>{{(me | async)?.data.me.firstName}} {{(me | async)?.data.me.lastName}}</md-card-title>
         <md-card-subtitle>Header subtitle</md-card-subtitle>
       </md-card-header>
       <md-card-content>
-        <p>Here is some more content</p>
+        You owe: {{ unpaidAmount | async }}
       </md-card-content>
     </md-card>
 
-    <pre>{{ me | json}}</pre>
-    <br>
-    {{ weekId }}
-    <br>
-    <button (click)="subToWeek()">Do the thing!</button>
+    <md-card *ngIf="week | async">
+      <md-card-header>
+        <md-card-title>Week Details</md-card-title>
+      </md-card-header>
+      <md-card-content>
+        <span>Cost: {{ (week | async)?.data.week.cost }}</span> <br>
+        <span
+          *ngIf="(week | async)?.data.week.shopper">Shopper: {{ (week | async)?.data.week.shopper?.firstName }}</span>
+        <span *ngIf="!(week | async)?.data.week.shopper">No shopper set</span>
+      </md-card-content>
+      <md-card-actions align="end">
+        <button md-button>UPDATE</button>
+        <button md-button (click)="subToWeek()">JOIN</button>
+      </md-card-actions>
+    </md-card>
+
+    <span>People in week</span><br>
+    <ul>
+      <li *ngFor=" let user of (week | async)?.data.week.users">
+        {{user.user.firstName}}
+      </li>
+    </ul>
+
+    <input type="number" [(ngModel)]="cost">
+
+    <button (click)="updateCost()">Update Cost</button>
+    <button (click)="refetch()">Refetch</button>
   </div>
 </md-sidenav-layout>
