@@ -13,6 +13,9 @@ const UnpaidWeeksQuery = gql`{
                 __typename
                 weekId
                 cost
+                users {
+                  userId
+                }
             }
         }
     }

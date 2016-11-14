@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
     this.me.subscribe((result) => this.meId = result.data.me.userId);
 
     this.apolloClient.watchQuery({query: UnpaidWeeksQuery}).subscribe(({data}) => {
-      this.unpaidAmount = Observable.from(data.me.weeks).scan((acc: number, next: any): number => acc + next.week.cost, 0) as Observable<number>;
+      this.unpaidAmount = Observable.from(data.me.weeks).scan((acc: number, next: any): number => acc + (next.week.cost / next.week.users.length), 0) as Observable<number>;
     });
 
 
