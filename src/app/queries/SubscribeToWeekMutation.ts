@@ -5,7 +5,28 @@ const SubscribeToWeekMutation = gql`
         subscribeToWeek(slices: $slices, userId: $userId, weekId: $weekId) {
             __typename
             weekId
-            paid
+            cost
+            users {
+              __typename
+              userId
+              weekId
+              slices
+              paid
+              user {
+                __typename
+                userId
+                avatarUrl
+                firstName
+                lastName
+              }
+            }
+            shopper {
+              __typename
+              userId
+              firstName
+              avatarUrl
+              facebookId
+            }
         }
     }
 `;
