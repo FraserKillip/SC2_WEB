@@ -10,7 +10,7 @@ export const homeState = {
       token: 'weekId',
       deps: [Transition, WeekService],
       resolveFn: (trans, weekService: WeekService) =>
-      trans.params().weekId || weekService.getCurrentWeekId()
+      parseInt(trans.params().weekId, 10) || weekService.getCurrentWeekId()
     }
   ]
 };

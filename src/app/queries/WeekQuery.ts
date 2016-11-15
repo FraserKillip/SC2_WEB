@@ -25,6 +25,7 @@ const WeekQuery = gql`
                 userId
                 firstName
                 avatarUrl
+                facebookId
             }
         }
     }

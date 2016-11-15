@@ -42,7 +42,8 @@
         <span *ngIf="!(week | async)?.data.week.shopper">No shopper set</span>
       </md-card-content>
       <md-card-actions align="end">
-        <button md-button>UPDATE</button>
+        <button md-button (click)="lastWeek()">PREVIOUS WEEK</button>
+        <button md-button (click)="nextWeek()">NEXT WEEK</button>
         <button md-button (click)="subToWeek()">JOIN</button>
       </md-card-actions>
     </md-card>
