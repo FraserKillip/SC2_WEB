@@ -9,6 +9,7 @@ import UnpaidWeeksQuery from '../queries/UnpaidWeeksQuery';
 import { Observable } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
 import UpdateWeekMutation from '../queries/UpdateWeekMutation';
+import WeekLinkQuery from '../queries/WeekLinkQuery';
 
 @Component({
   selector: 'sc-home',
@@ -20,9 +21,10 @@ export class HomeComponent implements OnInit {
   @Input() weekId: number;
   meId: number;
   me: ApolloQueryObservable<ApolloQueryResult>;
-  week: ApolloQueryObservable<ApolloQueryResult>;
+  week: any;
   unpaidAmount: Observable<number>;
   cost: number;
+  thisWeekSub: any;
 
   constructor(private apolloClient: Angular2Apollo, private fbService: FacebookService, private stateService: StateService) {
   }
@@ -42,9 +44,18 @@ export class HomeComponent implements OnInit {
     });
 
 
-    this.week = this.apolloClient.watchQuery({
+    this.apolloClient.watchQuery({
       query: WeekQuery,
       variables: {weekId: this.weekId}
+    }).subscribe(({data}) => {
+      this.week = data.week;
+    });
+
+    this.apolloClient.watchQuery({
+      query: WeekLinkQuery,
+      variables: {weekId: this.weekId}
+    }).subscribe(({data}) => {
+      this.thisWeekSub = data.weekLink;
     });
   }
 
@@ -62,13 +73,41 @@ export class HomeComponent implements OnInit {
   }
 
   subToWeek() {
+
+    this.thisWeekSub = this.thisWeekSub || {
+      slices: 1,
+      weekId: this.weekId,
+      userId: this.meId,
+      paid: 0
+  };
+
+    this.thisWeekSub.slices = 1;
+
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
-      variables: {
-        slices: 1,
-        weekId: this.weekId,
-        userId: this.meId
-      }
+      variables: this.thisWeekSub
+    }).then(({data}) => {
+      console.log(data);
+    });
+  }
+
+  payWeek() {
+
+    this.thisWeekSub.paid = this.week.cost / this.week.users.length;
+
+    this.apolloClient.mutate({
+      mutation: SubscribeToWeekMutation,
+      variables: this.thisWeekSub
+    }).then(({data}) => {
+      console.log(data);
+    });
+  }
+
+  unsubToWeek() {
+    this.thisWeekSub.slices = 0;
+    this.apolloClient.mutate({
+      mutation: SubscribeToWeekMutation,
+      variables: this.thisWeekSub
     }).then(({data}) => {
       console.log(data);
     });

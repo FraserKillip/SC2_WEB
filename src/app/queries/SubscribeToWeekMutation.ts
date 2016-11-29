@@ -1,8 +1,8 @@
 import gql from 'graphql-tag/index';
 
 const SubscribeToWeekMutation = gql`
-    mutation SubscribeToWeek($slices: Int, $userId: Int, $weekId: Int) {
-        subscribeToWeek(slices: $slices, userId: $userId, weekId: $weekId) {
+    mutation SubscribeToWeek($slices: Int, $userId: Int, $weekId: Int, $paid: Float) {
+        subscribeToWeek(slices: $slices, userId: $userId, weekId: $weekId, paid: $paid) {
             __typename
             weekId
             cost

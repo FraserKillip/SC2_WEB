@@ -31,26 +31,28 @@
       </md-card-content>
     </md-card>
 
-    <md-card *ngIf="week | async">
+    <md-card *ngIf="week">
       <md-card-header>
         <md-card-title>Week Details</md-card-title>
       </md-card-header>
       <md-card-content>
-        <span>Cost: {{ (week | async)?.data.week.cost }}</span> <br>
+        <span>Cost: {{ week?.cost }}</span> <br>
         <span
-          *ngIf="(week | async)?.data.week.shopper">Shopper: {{ (week | async)?.data.week.shopper?.firstName }}</span>
-        <span *ngIf="!(week | async)?.data.week.shopper">No shopper set</span>
+          *ngIf="week?.shopper">Shopper: {{ week?.shopper?.firstName }}</span>
+        <span *ngIf="!week?.shopper">No shopper set</span>
       </md-card-content>
       <md-card-actions align="end">
         <button md-button (click)="lastWeek()">PREVIOUS WEEK</button>
         <button md-button (click)="nextWeek()">NEXT WEEK</button>
-        <button md-button (click)="subToWeek()">JOIN</button>
+        <button md-button (click)="subToWeek()" *ngIf="thisWeekSub == null || thisWeekSub?.slices === 0">JOIN</button>
+        <button md-button (click)="unsubToWeek()" *ngIf="thisWeekSub?.slices === 1">LEAVE</button>
+        <button md-button (click)="payWeek()">PAY</button>
       </md-card-actions>
     </md-card>
 
     <span>People in week</span><br>
     <ul>
-      <li *ngFor=" let user of (week | async)?.data.week.users">
+      <li *ngFor=" let user of week?.users">
         {{user.user.firstName}}
       </li>
     </ul>
@@ -59,5 +61,7 @@
 
     <button (click)="updateCost()">Update Cost</button>
     <button (click)="refetch()">Refetch</button>
+
+    {{thisWeekSub | json}}
   </div>
 </md-sidenav-layout>
