@@ -94,6 +94,10 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  payAll() {
+    window.prompt('Soon™');
+  }
+
   payWeek() {
 
     this.thisWeekSub.paid = this.week.cost / this.week.users.length;
