@@ -110,6 +110,18 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  unpayWeek() {
+
+    this.thisWeekSub.paid = 0;
+
+    this.apolloClient.mutate({
+      mutation: SubscribeToWeekMutation,
+      variables: this.thisWeekSub
+    }).then(({data}) => {
+      console.log(data);
+    });
+  }
+
   unsubToWeek() {
     this.thisWeekSub.slices = 0;
     this.apolloClient.mutate({
