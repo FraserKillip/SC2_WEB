@@ -15,10 +15,7 @@
     </button>
     Sandwich Club 2
   </md-toolbar>
-  <!--<user-tile [user]="me | async" (linkUpdated)="linkUpdated($event)"></user-tile>-->
-  <!--<week-tile [week]="week | async"></week-tile>-->
 
-  <!--<user-tile [link]="link" (linkUpdated)="linkUpdated($event)" *ngFor="let link of (week | async)?.Links"></user-tile>-->
   <div class="content">
     <md-card>
       <md-card-header *ngIf="me | async">
@@ -29,14 +26,35 @@
       <md-card-content>
         You owe: {{ unpaidAmount | async }}
       </md-card-content>
+      <md-card-actions align="end">
+        <button md-button (click)="payWeek()">PAY ALL</button>
+      </md-card-actions>
     </md-card>
 
     <md-card *ngIf="week">
       <md-card-header>
-        <md-card-title>Week Details</md-card-title>
+        <md-card-title>Week Details -
+          <span *ngIf="currentWeekId === weekId">
+            this week
+          </span>
+          <span *ngIf="currentWeekId > weekId">
+            {{currentWeekId - weekId}} week(s) ago
+          </span>
+          <span *ngIf="currentWeekId === weekId - 1">
+            next week
+          </span>
+          <span *ngIf="currentWeekId === weekId - 2">
+            week after next
+          </span>
+          <span *ngIf="currentWeekId < weekId - 2">
+            WTF are you doing? this is the future!!
+          </span> -
+          {{ weekService.getStartOfWeek(weekService.weekIdToDate(weekId)) | date:'dd/MM/yy' }}
+        </md-card-title>
       </md-card-header>
       <md-card-content>
         <span>Cost: {{ week?.cost }}</span> <br>
+        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length }} - Paid: {{ thisWeekSub?.paid }}</span> <br>
         <span
           *ngIf="week?.shopper">Shopper: {{ week?.shopper?.firstName }}</span>
         <span *ngIf="!week?.shopper">No shopper set</span>

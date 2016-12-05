@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
 import UpdateWeekMutation from '../queries/UpdateWeekMutation';
 import WeekLinkQuery from '../queries/WeekLinkQuery';
+import WeekService from '../week.service';
 
 @Component({
   selector: 'sc-home',
@@ -25,8 +26,10 @@ export class HomeComponent implements OnInit {
   unpaidAmount: Observable<number>;
   cost: number;
   thisWeekSub: any;
+  currentWeekId: number;
 
-  constructor(private apolloClient: Angular2Apollo, private fbService: FacebookService, private stateService: StateService) {
+  constructor(private apolloClient: Angular2Apollo, private fbService: FacebookService, private stateService: StateService, public weekService: WeekService) {
+    this.currentWeekId = this.weekService.getCurrentWeekId();
   }
 
   ngOnInit() {
