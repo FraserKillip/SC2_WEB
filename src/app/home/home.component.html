@@ -24,7 +24,7 @@
         <md-card-subtitle>Header subtitle</md-card-subtitle>
       </md-card-header>
       <md-card-content>
-        You owe: {{ unpaidAmount | async }}
+        You owe: {{ unpaidAmount | async | currency:'NZD':true }}
       </md-card-content>
       <md-card-actions align="end">
         <button md-button (click)="payAll()">PAY ALL</button>
@@ -53,8 +53,8 @@
         </md-card-title>
       </md-card-header>
       <md-card-content>
-        <span>Cost: {{ week?.cost }}</span> <br>
-        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length }} - Paid: {{ thisWeekSub?.paid }}</span> <br>
+        <span>Cost: {{ week?.cost | currency:'NZD':true }}</span> <br>
+        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length | currency:'NZD':true }} - Paid: {{ thisWeekSub?.paid | currency:'NZD':true }}</span> <br>
         <span
           *ngIf="week?.shopper">Shopper: {{ week?.shopper?.firstName }}</span>
         <span *ngIf="!week?.shopper">No shopper set</span>
