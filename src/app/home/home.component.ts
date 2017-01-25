@@ -1,17 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { StateService } from 'ui-router-ng2';
-import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
-import { ApolloQueryResult } from 'apollo-client';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/scan';
-import 'rxjs/add/observable/from';
-
 import { MeQuery } from '../queries/Queries';
+import { Angular2Apollo, ApolloQueryObservable } from 'angular2-apollo';
 import { FacebookService } from '../facebook/facebook.service';
+import { StateService } from 'ui-router-ng2';
 import WeekQuery from '../queries/WeekQuery';
 import SubscribeToWeekMutation from '../queries/SubscribeToWeekMutation';
 import UnpaidWeeksQuery from '../queries/UnpaidWeeksQuery';
+import { Observable } from 'rxjs';
+import { ApolloQueryResult } from 'apollo-client';
 import UpdateWeekMutation from '../queries/UpdateWeekMutation';
 import WeekLinkQuery from '../queries/WeekLinkQuery';
 import WeekService from '../week.service';
@@ -25,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   @Input() weekId: number;
   meId: number;
-  me: ApolloQueryObservable<ApolloQueryResult<any>>;
+  me: ApolloQueryObservable<ApolloQueryResult>;
   week: any;
   unpaidAmount: Observable<number>;
   cost: number;
@@ -44,21 +40,21 @@ export class HomeComponent implements OnInit {
     this.me = this.apolloClient.watchQuery({query: MeQuery});
     this.me.subscribe((result) => this.meId = result.data.me.userId);
 
-    this.apolloClient.watchQuery<any>({query: UnpaidWeeksQuery}).subscribe(({data}) => {
+    this.apolloClient.watchQuery({query: UnpaidWeeksQuery}).subscribe(({data}) => {
       this.unpaidAmount = Observable.from(data.me.weeks).scan((acc: number, next: any): number => {
         return acc + (next.week.cost / next.week.users.length);
       }, 0) as Observable<number>;
     });
 
 
-    this.apolloClient.watchQuery<any>({
+    this.apolloClient.watchQuery({
       query: WeekQuery,
       variables: {weekId: this.weekId}
     }).subscribe(({data}) => {
       this.week = data.week;
     });
 
-    this.apolloClient.watchQuery<any>({
+    this.apolloClient.watchQuery({
       query: WeekLinkQuery,
       variables: {weekId: this.weekId}
     }).subscribe(({data}) => {
@@ -93,7 +89,7 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).toPromise().then(({data}) => {
+    }).then(({data}) => {
       console.log(data);
     });
   }
@@ -109,7 +105,7 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).toPromise().then(({data}) => {
+    }).then(({data}) => {
       console.log(data);
     });
   }
@@ -121,7 +117,7 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).toPromise().then(({data}) => {
+    }).then(({data}) => {
       console.log(data);
     });
   }
@@ -131,7 +127,7 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).toPromise().then(({data}) => {
+    }).then(({data}) => {
       console.log(data);
     });
   }
@@ -148,7 +144,7 @@ export class HomeComponent implements OnInit {
         weekId: this.weekId,
         shopperId: this.meId
       }
-    }).toPromise().then(({data}) => {
+    }).then(({data}) => {
       console.log(data);
     });
   }
