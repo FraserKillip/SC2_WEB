@@ -2,20 +2,22 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { AppComponent } from './app.component';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloModule, defaultApolloClient } from 'angular2-apollo';
-import { environment } from '../environments/environment';
-import { FacebookService } from './facebook/facebook.service';
 import { MaterialModule } from '@angular/material';
 import { UIRouterModule } from 'ui-router-ng2';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloModule, defaultApolloClient } from 'angular2-apollo';
+import 'hammerjs';
+
+import { AppComponent } from './app.component';
+import { environment } from '../environments/environment';
+import { FacebookService } from './facebook/facebook.service';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { loginState, homeState } from './app-states';
-import RouterConfig from './router-config';
+import { configureModule } from './router-config';
 import WeekService from './week.service';
 
-const networkInterface = createNetworkInterface(`${environment.apiAddress}/graphql`);
+const networkInterface = createNetworkInterface({uri: `${environment.apiAddress}/graphql`});
 
 networkInterface.use([{
   applyMiddleware(req, next) {
@@ -37,30 +39,32 @@ networkInterface.useAfter([{
   }
 }]);
 
-const client = new ApolloClient({
-  networkInterface: networkInterface,
-  dataIdFromObject: (o: any) => {
-    let key;
-    switch (o.__typename) {
-      case 'user':
-        key = `${o.__typename}-${o.userId},`;
-        break;
-      case 'week':
-        key = `${o.__typename}-${o.weekId},`;
-        break;
-      case 'weekUserLink':
-        key = `${o.__typename}-${o.weekId}-${o.userId},`;
-        break;
-      default:
-        key = `${o.__typename}-${o.id},`;
-        break;
+export function client() {
+  return new ApolloClient({
+    networkInterface: networkInterface,
+    dataIdFromObject: (o: any) => {
+      let key;
+      switch (o.__typename) {
+        case 'user':
+          key = `${o.__typename}-${o.userId},`;
+          break;
+        case 'week':
+          key = `${o.__typename}-${o.weekId},`;
+          break;
+        case 'weekUserLink':
+          key = `${o.__typename}-${o.weekId}-${o.userId},`;
+          break;
+        default:
+          key = `${o.__typename}-${o.id},`;
+          break;
+      }
+
+      console.log(key, o);
+
+      return key;
     }
-
-    console.log(key, o);
-
-    return key;
-  }
-});
+  });
+}
 
 @NgModule({
   declarations: [
@@ -75,12 +79,12 @@ const client = new ApolloClient({
     // AppRoutingModule,
     ApolloModule.withClient(client),
     MaterialModule.forRoot(),
-    UIRouterModule.forRoot({states: [loginState, homeState], configClass: RouterConfig})
+    UIRouterModule.forRoot({ states: [loginState, homeState], config: configureModule })
   ],
   providers: [
-    FacebookService,
+    { provide: FacebookService, useClass: FacebookService },
+    { provide: WeekService, useClass: WeekService },
     defaultApolloClient(client),
-    WeekService
   ],
   bootstrap: [AppComponent]
 })
