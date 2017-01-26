@@ -8,13 +8,9 @@ import WeekService from '../week.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
   constructor(private fbService: FacebookService, private stateService: StateService, private weekService: WeekService) {
-  }
-
-  ngOnInit() {
-    console.log(this);
   }
 
   doLogin() {

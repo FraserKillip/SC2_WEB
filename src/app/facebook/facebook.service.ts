@@ -40,6 +40,6 @@ export class FacebookService {
   }
 
   logout() {
-    FB.logout(r => console.log(r));
+    FB.logout();
   }
 }

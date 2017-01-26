@@ -56,8 +56,6 @@ const client = new ApolloClient({
         break;
     }
 
-    console.log(key, o);
-
     return key;
   }
 });
