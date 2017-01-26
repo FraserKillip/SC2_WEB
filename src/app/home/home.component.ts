@@ -89,8 +89,6 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).then(({data}) => {
-      console.log(data);
     });
   }
 
@@ -105,8 +103,6 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).then(({data}) => {
-      console.log(data);
     });
   }
 
@@ -117,8 +113,6 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).then(({data}) => {
-      console.log(data);
     });
   }
 
@@ -127,8 +121,6 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: this.thisWeekSub
-    }).then(({data}) => {
-      console.log(data);
     });
   }
 
@@ -144,8 +136,6 @@ export class HomeComponent implements OnInit {
         weekId: this.weekId,
         shopperId: this.meId
       }
-    }).then(({data}) => {
-      console.log(data);
     });
   }
 }
