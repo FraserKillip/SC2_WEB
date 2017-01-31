@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   @Input() weekId: number;
   meId: number;
-  me: ApolloQueryObservable<ApolloQueryResult>;
+  me: ApolloQueryObservable<ApolloQueryResult<any>>;
   week: any;
   unpaidAmount: Observable<number>;
   cost: number;
@@ -37,24 +37,24 @@ export class HomeComponent implements OnInit {
       this.stateService.go('login');
       return;
     }
-    this.me = this.apolloClient.watchQuery({query: MeQuery});
+    this.me = this.apolloClient.watchQuery<any>({query: MeQuery});
     this.me.subscribe((result) => this.meId = result.data.me.userId);
 
-    this.apolloClient.watchQuery({query: UnpaidWeeksQuery}).subscribe(({data}) => {
+    this.apolloClient.watchQuery<any>({query: UnpaidWeeksQuery}).subscribe(({data}) => {
       this.unpaidAmount = Observable.from(data.me.weeks).scan((acc: number, next: any): number => {
         return acc + (next.week.cost / next.week.users.length);
       }, 0) as Observable<number>;
     });
 
 
-    this.apolloClient.watchQuery({
+    this.apolloClient.watchQuery<any>({
       query: WeekQuery,
       variables: {weekId: this.weekId}
     }).subscribe(({data}) => {
       this.week = data.week;
     });
 
-    this.apolloClient.watchQuery({
+    this.apolloClient.watchQuery<any>({
       query: WeekLinkQuery,
       variables: {weekId: this.weekId}
     }).subscribe(({data}) => {
