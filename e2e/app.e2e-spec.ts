@@ -9,6 +9,6 @@ describe('sandwich-club App', function() {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(true);
+    expect(page.getParagraphText()).toEqual('sc works!');
   });
 });

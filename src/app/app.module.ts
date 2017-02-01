@@ -12,7 +12,7 @@ import { UIRouterModule } from 'ui-router-ng2';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { loginState, homeState } from './app-states';
-import RouterConfig from './router-config';
+import { configureModule } from './router-config';
 import WeekService from './week.service';
 
 const networkInterface = createNetworkInterface(`${environment.apiAddress}/graphql`);
@@ -37,28 +37,30 @@ networkInterface.useAfter([{
   }
 }]);
 
-const client = new ApolloClient({
-  networkInterface: networkInterface,
-  dataIdFromObject: (o: any) => {
-    let key;
-    switch (o.__typename) {
-      case 'user':
-        key = `${o.__typename}-${o.userId},`;
-        break;
-      case 'week':
-        key = `${o.__typename}-${o.weekId},`;
-        break;
-      case 'weekUserLink':
-        key = `${o.__typename}-${o.weekId}-${o.userId},`;
-        break;
-      default:
-        key = `${o.__typename}-${o.id},`;
-        break;
-    }
+export function client() {
+  return new ApolloClient({
+    networkInterface: networkInterface,
+    dataIdFromObject: (o: any) => {
+      let key;
+      switch (o.__typename) {
+        case 'user':
+          key = `${o.__typename}-${o.userId},`;
+          break;
+        case 'week':
+          key = `${o.__typename}-${o.weekId},`;
+          break;
+        case 'weekUserLink':
+          key = `${o.__typename}-${o.weekId}-${o.userId},`;
+          break;
+        default:
+          key = `${o.__typename}-${o.id},`;
+          break;
+      }
 
-    return key;
-  }
-});
+      return key;
+    }
+  });
+}
 
 @NgModule({
   declarations: [
@@ -73,12 +75,12 @@ const client = new ApolloClient({
     // AppRoutingModule,
     ApolloModule.withClient(client),
     MaterialModule.forRoot(),
-    UIRouterModule.forRoot({states: [loginState, homeState], configClass: RouterConfig})
+    UIRouterModule.forRoot({ states: [loginState, homeState], config: configureModule })
   ],
   providers: [
-    FacebookService,
+    { provide: FacebookService, useClass: FacebookService },
+    { provide: WeekService, useClass: WeekService },
     defaultApolloClient(client),
-    WeekService
   ],
   bootstrap: [AppComponent]
 })
