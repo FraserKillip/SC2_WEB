@@ -72,18 +72,30 @@
       </md-card-actions>
     </md-card>
 
-    <span>People in week</span><br>
-    <ul>
-      <li *ngFor=" let user of week?.users">
-        {{user.user.firstName}}
-      </li>
-    </ul>
+    <h2>People in Week</h2>
 
-    <input type="number" [(ngModel)]="cost">
+    <md-list>
+      <md-list-item *ngFor=" let user of week?.users">
+        <img md-list-avatar [src]="user.user.avatarUrl">
+        <p md-line>
+          {{user.user.firstName}} {{user.user.lastName}}
+        </p>
+      </md-list-item>
+    </md-list>
 
-    <button (click)="updateCost()">Update Cost</button>
-    <button (click)="refetch()">Refetch</button>
+    <h2>Lars Area</h2>
 
-    {{thisWeekSub | json}}
+    <form (submit)="updateCost()">
+      <md-input-container>
+        <input type="number" name="cost" md-input [(ngModel)]="cost" placeholder="Groceries Cost">
+        <span md-prefix>$&nbsp;</span>
+      </md-input-container>
+
+      <button md-raised-button type="submit">Update Cost</button>
+    </form>
+
+    <!--<button (click)="refetch()">Refetch</button>
+
+    {{thisWeekSub | json}}-->
   </div>
 </md-sidenav-layout>
