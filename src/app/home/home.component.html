@@ -74,8 +74,8 @@
 
     <h2>People in Week</h2>
 
-    <md-list>
-      <md-list-item *ngFor=" let user of week?.users">
+    <md-list class="weeksUsers">
+      <md-list-item class="weeksUsers-user" *ngFor=" let user of week?.users">
         <img md-list-avatar [src]="user.user.avatarUrl">
         <p md-line>
           {{user.user.firstName}} {{user.user.lastName}}
