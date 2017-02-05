@@ -87,7 +87,7 @@
 
     <form (submit)="updateCost()">
       <md-input-container>
-        <input type="number" name="cost" md-input [(ngModel)]="cost" placeholder="Groceries Cost">
+        <input type="number" name="cost" md-input [(ngModel)]="cost" placeholder="Groceries Cost" step="0.01">
         <span md-prefix>$&nbsp;</span>
       </md-input-container>
 
