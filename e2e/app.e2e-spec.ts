@@ -1,6 +1,6 @@
 import { SandwichClubPage } from './app.po';
 
-describe('sandwich-club App', function() {
+describe('sandwich-club App', () => {
   let page: SandwichClubPage;
 
   beforeEach(() => {
