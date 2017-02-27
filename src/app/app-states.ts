@@ -1,7 +1,7 @@
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { Transition } from 'ui-router-ng2';
-import WeekService from './week.service';
+import { WeekService } from './week.service';
 
 export const loginState = { name: 'login', url: '/login', component: LoginComponent };
 export const homeState = {
