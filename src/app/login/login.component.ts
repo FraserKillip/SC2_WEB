@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FacebookService } from '../facebook/facebook.service';
 import { StateService } from 'ui-router-ng2';
-import WeekService from '../week.service';
+import { WeekService } from '../week.service';
 
 @Component({
   selector: 'sc-login',

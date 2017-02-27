@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { loginState, homeState } from './app-states';
 import { configureModule } from './router-config';
-import WeekService from './week.service';
+import { WeekService } from './week.service';
 
 const networkInterface = createNetworkInterface(`${environment.apiAddress}/graphql`);
 
@@ -78,8 +78,8 @@ export function client() {
     UIRouterModule.forRoot({ states: [loginState, homeState], config: configureModule })
   ],
   providers: [
-    { provide: FacebookService, useClass: FacebookService },
-    { provide: WeekService, useClass: WeekService },
+    FacebookService,
+    WeekService,
     defaultApolloClient(client),
   ],
   bootstrap: [AppComponent]

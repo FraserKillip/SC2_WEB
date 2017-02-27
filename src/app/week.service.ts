@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export default class WeekService {
+export class WeekService {
   weekIdToDate(weekId: number): Date {
     // seconds = weekId * days in a week * hours in a day * minutes in an hours * seconds in a minute * milliseconds in a second
     const seconds = weekId * 7 * 24 * 60 * 60 * 1000;

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { ApolloQueryResult } from 'apollo-client';
 import UpdateWeekMutation from '../queries/UpdateWeekMutation';
 import WeekLinkQuery from '../queries/WeekLinkQuery';
-import WeekService from '../week.service';
+import { WeekService } from '../week.service';
 
 @Component({
   selector: 'sc-home',
