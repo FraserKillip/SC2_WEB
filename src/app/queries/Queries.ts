@@ -20,5 +20,6 @@ export const MeQuery = gql`
         shopper
         userId
         totalCost
+        totalPaid
     }
 `;

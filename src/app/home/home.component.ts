@@ -105,14 +105,16 @@ export class HomeComponent implements OnInit {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: { ...this.thisWeekSub, paid: this.week.cost / this.week.users.length }
-    });
+    })
+      .toPromise().then(() => { this.me.refetch(); this.weeks.refetch(); });
   }
 
   unpayWeek() {
     this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: { ...this.thisWeekSub, paid: 0 }
-    });
+    })
+      .toPromise().then(() => { this.me.refetch(); this.weeks.refetch(); });
   }
 
   updateCost() {
