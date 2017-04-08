@@ -1,4 +1,4 @@
-import gql from 'graphql-tag/index';
+import gql from 'graphql-tag';
 
 const WeekQuery = gql`
     query WeekQuery($weekId: Int){
@@ -27,6 +27,13 @@ const WeekQuery = gql`
                 avatarUrl
                 facebookId
             }
+        }
+        weekLink(weekId: $weekId) {
+            __typename
+            weekId
+            userId
+            paid
+            slices
         }
     }
 `;

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag/index';
+import gql from 'graphql-tag';
 
 const UpdateWeekMutation = gql`
     mutation UpdateWeek($weekId: Int, $shopperId: Int, $cost: Float) {

@@ -1,4 +1,4 @@
-import gql from 'graphql-tag/index';
+import gql from 'graphql-tag';
 
 const SubscribeToWeekMutation = gql`
     mutation SubscribeToWeek($slices: Int, $userId: Int, $weekId: Int, $paid: Float) {

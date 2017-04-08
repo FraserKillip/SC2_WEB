@@ -33,6 +33,10 @@ export class FacebookService {
   getStatus(): Observable<LoginStatusResponse> {
     return Observable.create((subscriber: Subscriber<any>) => {
       FB.getLoginStatus(response => {
+        if (response.status === 'connected') {
+          localStorage.setItem('token', `facebook ${response.authResponse.accessToken}`);
+        }
+
         subscriber.next(response);
         subscriber.complete();
       });
