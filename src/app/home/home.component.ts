@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   meId: number;
   me: ApolloQueryObservable<any>;
   week: any;
-  weeks: ApolloQueryObservable<any>
+  weeks: ApolloQueryObservable<any>;
   unpaidAmount: Observable<number>;
   cost: number;
   thisWeekSub: any;
