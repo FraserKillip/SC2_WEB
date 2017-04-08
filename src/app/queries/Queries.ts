@@ -1,4 +1,4 @@
-import gql from 'graphql-tag/index';
+import gql from 'graphql-tag';
 
 export const MeQuery = gql`
     query {
@@ -19,5 +19,7 @@ export const MeQuery = gql`
         phoneNumber
         shopper
         userId
+        totalCost
+        totalPaid
     }
 `;

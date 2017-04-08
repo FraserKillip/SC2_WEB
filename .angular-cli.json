@@ -19,8 +19,7 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "sc",
       "styles": [
-        "styles.less",
-        "app/material-theme.scss"
+        "styles.less"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

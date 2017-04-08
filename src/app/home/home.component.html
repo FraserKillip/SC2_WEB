@@ -24,7 +24,7 @@
         <md-card-subtitle>Header subtitle</md-card-subtitle>
       </md-card-header>
       <md-card-content>
-        You owe: {{ unpaidAmount | async | currency:'NZD':true }}
+        You owe: {{ ((me | async)?.data.me.totalCost - (me | async)?.data.me.totalPaid) | currency:'NZD':true }}
       </md-card-content>
       <md-card-actions align="end">
       <!-- Removing until we get it wired up to the backend.
