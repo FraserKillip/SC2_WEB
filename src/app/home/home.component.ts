@@ -60,8 +60,10 @@ export class HomeComponent implements OnInit {
   }
 
   logout() {
-    this.fbService.logout();
-    this.router.navigate(['login']);
+    this.fbService.logout()
+      .toPromise().then(() => {
+        this.router.navigate(['login']);
+      });
   }
 
   nextWeek() {

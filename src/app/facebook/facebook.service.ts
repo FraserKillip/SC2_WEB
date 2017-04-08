@@ -24,6 +24,10 @@ export class FacebookService {
   login(): Observable<LoginStatusResponse> {
     return Observable.create((subscriber: Subscriber<any>) => {
       FB.login(response => {
+        if (response.status === 'connected') {
+          localStorage.setItem('token', `facebook ${response.authResponse.accessToken}`);
+        }
+
         subscriber.next(response);
         subscriber.complete();
       });
@@ -44,6 +48,13 @@ export class FacebookService {
   }
 
   logout() {
-    FB.logout((response) => {});
+    localStorage.removeItem('token');
+
+    return Observable.create((subscriber: Subscriber<any>) => {
+      FB.logout((response) => {
+        subscriber.next(response);
+        subscriber.complete();
+      });
+    });
   }
 }

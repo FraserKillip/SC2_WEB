@@ -18,7 +18,6 @@ export class LoginComponent {
   doLogin() {
     this.fbService.login().subscribe((response: any) => {
       if (response.status === 'connected') {
-        localStorage.setItem('token', `facebook ${response.authResponse.accessToken}`);
         this.router.navigate(['']);
       }
     });
