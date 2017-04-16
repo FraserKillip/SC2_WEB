@@ -15,6 +15,7 @@ import UpdateWeekMutation from '../queries/UpdateWeekMutation';
 import WeekLinkQuery from '../queries/WeekLinkQuery';
 import { WeekService } from '../week.service';
 import { FacebookService } from '../facebook/facebook.service';
+import PayAllMutation from '../queries/PayAllMutation'
 
 @Component({
   selector: 'sc-home',
@@ -98,7 +99,11 @@ export class HomeComponent implements OnInit {
   }
 
   payAll() {
-    window.prompt('Soon™');
+    this.apolloClient.mutate({
+      mutation: PayAllMutation,
+      variables: { userId: this.meId },
+    })
+      .toPromise().then(() => { this.me.refetch(); this.weeks.refetch(); });
   }
 
   payWeek() {
