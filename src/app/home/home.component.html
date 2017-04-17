@@ -54,7 +54,7 @@
       </md-card-header>
       <md-card-content>
         <span>Cost: {{ week?.cost | currency:'NZD':true }}</span> <br>
-        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length | currency:'NZD':true }} - Paid: {{ thisWeekSub?.paid | currency:'NZD':true }}</span> <br>
+        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length | currency:'NZD':true }}</span> <br>
         <span
           *ngIf="week?.shopper">Shopper: {{ week?.shopper?.firstName }}</span>
         <span *ngIf="!week?.shopper">No shopper set</span>
@@ -64,8 +64,6 @@
         <button md-button (click)="nextWeek()">NEXT WEEK</button>
         <button md-button (click)="subToWeek()" *ngIf="thisWeekSub == null || thisWeekSub?.slices === 0">JOIN</button>
         <button md-button (click)="unsubToWeek()" *ngIf="thisWeekSub?.slices === 1">LEAVE</button>
-        <button md-button (click)="payWeek()" *ngIf="!thisWeekSub?.paid">PAY</button>
-        <button md-button (click)="unpayWeek()" *ngIf="thisWeekSub?.paid > 0">UN-PAY</button>
       </md-card-actions>
     </md-card>
 
@@ -90,9 +88,5 @@
 
       <button md-raised-button type="submit">Update Cost</button>
     </form>
-
-    <!--<button (click)="refetch()">Refetch</button>
-
-    {{thisWeekSub | json}}-->
   </div>
 </md-sidenav-container>
