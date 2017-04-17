@@ -64,8 +64,6 @@
         <button md-button (click)="nextWeek()">NEXT WEEK</button>
         <button md-button (click)="subToWeek()" *ngIf="thisWeekSub == null || thisWeekSub?.slices === 0">JOIN</button>
         <button md-button (click)="unsubToWeek()" *ngIf="thisWeekSub?.slices === 1">LEAVE</button>
-        <button md-button (click)="payWeek()" *ngIf="!thisWeekSub?.paid">PAY</button>
-        <button md-button (click)="unpayWeek()" *ngIf="thisWeekSub?.paid > 0">UN-PAY</button>
       </md-card-actions>
     </md-card>
 
