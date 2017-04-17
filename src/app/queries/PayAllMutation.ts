@@ -1,4 +1,4 @@
-import gql from 'graphql-tag/index';
+import gql from 'graphql-tag';
 
 const PayAllMutation = gql`
     mutation MarkAllWeeksPaidForUser($userId: Int) {
