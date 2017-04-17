@@ -27,10 +27,7 @@
         You owe: {{ ((me | async)?.data.me.totalCost - (me | async)?.data.me.totalPaid) | currency:'NZD':true }}
       </md-card-content>
       <md-card-actions align="end">
-      <!-- Removing until we get it wired up to the backend.
-           Note: This button should mark all weeks paid EXCEPT the current week.
-                 Else people will likely prematurely pay for the current week before everyone has joined -->
-<!--         <button md-button (click)="payAll()">PAY ALL</button> -->
+      <button md-button (click)="payAll()">PAY ALL</button>
       </md-card-actions>
     </md-card>
 
