@@ -25,6 +25,10 @@
       </md-card-header>
       <md-card-content>
         You owe: {{ ((me | async)?.data.me.totalCost - (me | async)?.data.me.totalPaid) | currency:'NZD':true }}
+        <span *ngIf="primaryShopper">
+          <br />
+          To {{ primaryShopper.firstName }}: {{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}
+        </span>
       </md-card-content>
       <md-card-actions align="end">
       <button md-button (click)="payAll()">PAY ALL</button>

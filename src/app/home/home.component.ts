@@ -7,7 +7,7 @@ import 'rxjs/add/observable/combineLatest';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/toPromise';
 
-import { MeQuery } from '../queries/Queries';
+import { UserQuery } from '../queries/Queries';
 import WeekQuery from '../queries/WeekQuery';
 import SubscribeToWeekMutation from '../queries/SubscribeToWeekMutation';
 import UnpaidWeeksQuery from '../queries/UnpaidWeeksQuery';
@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   @Input() weekId: number;
   meId: number;
   me: ApolloQueryObservable<any>;
+  primaryShopper: any;
   week: any;
   weeks: ApolloQueryObservable<any>;
   unpaidAmount: Observable<number>;
@@ -45,8 +46,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.me = this.apolloClient.watchQuery<any>({ query: MeQuery });
+    this.me = this.apolloClient.watchQuery<any>({ query: UserQuery });
     this.me.subscribe(({ data }) => this.meId = data.me.userId);
+    this.me.subscribe(({ data }) => this.primaryShopper = data.primaryShopper);
 
     this.route.params
       .flatMap(({ weekId }) => {
