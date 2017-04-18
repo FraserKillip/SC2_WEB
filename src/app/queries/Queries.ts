@@ -6,7 +6,7 @@ export const UserQuery = gql`
             __typename
             ... userFields
         }
-        primayShopper {
+        primaryShopper {
             firstName
             bankName
             bankDetails
