@@ -1,10 +1,15 @@
 import gql from 'graphql-tag';
 
-export const MeQuery = gql`
+export const UserQuery = gql`
     query {
         me {
             __typename
             ... userFields
+        }
+        primayShopper {
+            firstName
+            bankName
+            bankDetails
         }
     }
     fragment userFields on user {
