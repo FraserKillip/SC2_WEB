@@ -27,7 +27,7 @@
         You owe: {{ ((me | async)?.data.me.totalCost - (me | async)?.data.me.totalPaid) | currency:'NZD':true }}
         <span *ngIf="primaryShopper">
           <br />
-          To {{ primaryShopper.firstName }}: {{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}
+          To {{ primaryShopper.firstName }}<span *ngIf="primaryShopper.bankName || primaryShopper.bankDetails">: {{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</span>
         </span>
       </md-card-content>
       <md-card-actions align="end">
