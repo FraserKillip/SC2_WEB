@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import 'rxjs/add/operator/map';
 
 import { FacebookService } from './facebook/facebook.service';
 
