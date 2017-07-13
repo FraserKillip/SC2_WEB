@@ -76,7 +76,7 @@ export function client() {
     HttpModule,
     AppRoutingModule,
     ApolloModule.withClient(client),
-    MaterialModule.forRoot(),
+    MaterialModule,
   ],
   providers: [
     FacebookService,
