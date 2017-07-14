@@ -3,7 +3,7 @@
   <md-card-header>
     <img md-card-avatar src="https://placeimg.com/40/40/animals" />
     <md-card-title>
-      Week of {{ weekService.getStartOfWeek(weekService.weekIdToDate(week.weekId)) | date:'shortDate' }} {{ week.weekId }}
+      Week of {{ weekService.getStartOfWeek(weekService.weekIdToDate(week.weekId)) | date:'shortDate' }}
     </md-card-title>
     <md-card-subtitle [ngPlural]="currentWeekId - week.weekId">
       <ng-template ngPluralCase="=0">this week</ng-template>
