@@ -1,0 +1,19 @@
+<section class="weeks-list">
+  <h2>Active Weeks</h2>
+
+  <div *ngFor="let weekLink2 of lolWeeks | async" class="week">
+    <sc-week-card [weekLink]="weekLink2"></sc-week-card>
+  </div>
+</section>
+
+<section class="weeks-list">
+  <header class="weeks-header">
+    <h2>Due Weeks</h2>
+
+    <button md-raised-button>Pay all</button>
+  </header>
+
+  <div *ngFor="let weekLink of meWeeks | async" class="week">
+    <sc-week-card [weekLink]="weekLink"></sc-week-card>
+  </div>
+</section>

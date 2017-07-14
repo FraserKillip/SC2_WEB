@@ -15,6 +15,9 @@ import { MaterialModule } from '@angular/material';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
+import { WeeksComponent } from './weeks/weeks.component';
+import { ReversePipe } from './reverse.pipe';
+import { WeekCardComponent } from './week-card/week-card.component';
 
 const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
 
@@ -68,6 +71,9 @@ export function client() {
     AppComponent,
     HomeComponent,
     LoginComponent,
+    WeeksComponent,
+    ReversePipe,
+    WeekCardComponent,
   ],
   imports: [
     BrowserModule,
