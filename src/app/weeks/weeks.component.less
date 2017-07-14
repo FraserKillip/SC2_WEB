@@ -1,5 +1,8 @@
-.week {
-  margin-bottom: 16px;
+.weeks-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
 }
 
 .weeks-list {
@@ -8,6 +11,20 @@
 
 .weeks-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.weeks-paidButton {
+  flex: 0 0 auto;
+  margin-right: 8px;
+}
+
+.weeks-payTo {
+  margin: 0;
+}
+
+.weeks-payToAccount {
+  white-space: nowrap;
 }

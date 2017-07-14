@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
@@ -17,7 +17,7 @@ import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
 import { WeeksComponent } from './weeks/weeks.component';
 import { ReversePipe } from './reverse.pipe';
-import { WeekCardComponent } from './week-card/week-card.component';
+import { WeekListComponent } from './week-list/week-list.component';
 
 const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
 
@@ -73,7 +73,7 @@ export function client() {
     LoginComponent,
     WeeksComponent,
     ReversePipe,
-    WeekCardComponent,
+    WeekListComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,6 +88,7 @@ export function client() {
     FacebookService,
     WeekService,
     defaultApolloClient(client),
+    { provide: LOCALE_ID, useValue: 'languages' in navigator && navigator['languages'].length > 0 ? navigator['languages'][0] : 'en-NZ' },
   ],
   bootstrap: [AppComponent]
 })

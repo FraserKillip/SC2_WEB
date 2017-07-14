@@ -1,19 +1,40 @@
-<section class="weeks-list">
-  <h2>Active Weeks</h2>
+<md-progress-spinner
+  class="weeks-loading"
+  *ngIf="loading"
+  [mode]="'indeterminate'">
+</md-progress-spinner>
 
-  <div *ngFor="let weekLink2 of lolWeeks | async" class="week">
-    <sc-week-card [weekLink]="weekLink2"></sc-week-card>
-  </div>
-</section>
+<div *ngIf="!loading">
+  <section class="weeks-list">
+    <h2>Active Weeks</h2>
 
-<section class="weeks-list">
-  <header class="weeks-header">
+    <sc-week-list
+      [weeks]="activeWeeks"
+      [me]="me"
+      (onChange)="refresh($event)">
+    </sc-week-list>
+  </section>
+
+  <section class="weeks-list">
     <h2>Due Weeks</h2>
 
-    <button md-raised-button>Pay all</button>
-  </header>
+    <div class="weeks-header">
+      <button md-raised-button class="weeks-paidButton" (click)="markAllPaid()" [disabled]="isAllPaid()">Mark all paid</button>
 
-  <div *ngFor="let weekLink of meWeeks | async" class="week">
-    <sc-week-card [weekLink]="weekLink"></sc-week-card>
-  </div>
-</section>
+      <p class="weeks-payTo" *ngIf="!isAllPaid()">
+        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':true }}</strong>
+        to {{ primaryShopper.firstName}}
+        <strong class="weeks-payToAccount">{{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</strong>
+      </p>
+      <p class="weeks-payTo" *ngIf="isAllPaid()">
+        You are all settled up.
+      </p>
+    </div>
+
+    <sc-week-list
+      [weeks]="dueWeeks"
+      [me]="me"
+      (onChange)="refresh($event)">
+    </sc-week-list>
+  </section>
+</div>

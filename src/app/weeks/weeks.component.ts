@@ -16,47 +16,70 @@ export class WeeksComponent implements OnInit {
     query {
       me {
         userId
+        totalCost
+        totalPaid
         weeks {
           weekId
+          userId
+          slices
           paid
-          week {
-            weekId
-            cost
-            costPerUser
-            shopper {
-              firstName
-              avatarUrl
-            }
-          }
         }
+      }
+      primaryShopper {
+        userId
+        firstName
+        lastName
+        bankDetails
+        bankName
+      }
+      weeks {
+        weekId
+        cost
+        costPerUser
       }
     }
   `;
 
-  currentWeekId: number;
-  weeksQuery;
-  weeks;
+  weeksQuery: ApolloQueryObservable<any>;
+  loading;
   me;
-  meWeeks;
-  lolWeeks;
+  primaryShopper;
+  activeWeeks;
+  dueWeeks;
 
-  constructor(private apolloClient: Apollo, public weekService: WeekService
-  ) {
-  }
+  constructor(private apolloClient: Apollo, private weekService: WeekService) { }
 
   ngOnInit() {
-    this.currentWeekId = this.weekService.getCurrentWeekId();
+    this.loading = true;
 
-    this.weeksQuery = this.apolloClient.watchQuery({
-      query: this.weeksGql
+    this.weeksQuery = this.apolloClient.watchQuery({ query: this.weeksGql });
+
+    this.weeksQuery.subscribe(({ data, loading }) => {
+      this.loading = loading;
+      this.me = data.me;
+      this.primaryShopper = data.primaryShopper;
+
+      const sortedWeeks = sortBy(data.weeks, 'weekId').reverse();
+
+      this.activeWeeks = sortedWeeks.filter(w => !this.isDueWeek(w.weekId));
+      this.dueWeeks = sortedWeeks.filter(w => this.isDueWeek(w.weekId));
     });
-
-    this.weeks = this.weeksQuery.map(({ data }) => { console.log(data); return sortBy(data.me.weeks, 'weekId').reverse(); });
-    this.meWeeks = this.weeks.map((weeks) => weeks.slice(2));
-    this.lolWeeks = this.weeks.map((weeks) => { console.log(weeks); return weeks.slice(0, 2) });
   }
 
-  hasJoinedWeek(users) {
-    return this.me.map(me => users.map(u => u.user.userId).includes(me.userId));
+  refresh() {
+    this.weeksQuery.refetch();
+  }
+
+  isDueWeek(weekId: number) {
+    return !this.weekService.isCurrentWeek(weekId) && !this.weekService.isPreviousWeek(weekId);
+  }
+
+  isAllPaid() {
+    return Math.abs(this.me.totalCost - this.me.totalPaid) < Number.EPSILON;
+  }
+
+  markAllPaid() {
+    this.weekService.markAllPaid(this.me.userId)
+      .then(() => this.refresh());
   }
 }
