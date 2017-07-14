@@ -23,17 +23,10 @@ export class WeeksComponent implements OnInit {
         userId
         totalCost
         totalPaid
-        weeks {
-          weekId
-          userId
-          slices
-          paid
-        }
       }
       primaryShopper {
         userId
         firstName
-        lastName
         bankDetails
         bankName
       }
@@ -41,6 +34,12 @@ export class WeeksComponent implements OnInit {
         weekId
         cost
         costPerUser
+        users {
+          weekId
+          userId
+          slices
+          paid
+        }
       }
     }
   `;

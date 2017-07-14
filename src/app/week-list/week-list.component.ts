@@ -21,14 +21,6 @@ export class WeekListComponent implements OnInit {
     this.currentWeekId = this.weekService.getCurrentWeekId();
   }
 
-  numMembersJoined(week) {
-    if (week.cost <= 0 || week.costPerUser <= 0) {
-      return 0;
-    }
-
-    return Math.round(week.cost / week.costPerUser);
-  }
-
   unSubToWeek(weekId) {
     this.weekService.unSubToWeek(this.me.userId, weekId)
       .then(() => this.onChange.emit());
@@ -39,27 +31,23 @@ export class WeekListComponent implements OnInit {
       .then(() => this.onChange.emit());
   }
 
-  isSubbedToWeek(weekId) {
-    const weekLink = this.getWeekLinkForWeek(weekId);
+  isSubbedToWeek(week) {
+    const weekLink = this.getWeekLinkForWeek(week);
 
     return weekLink == null || weekLink.slices <= 0;
   }
 
-  amountPayedForWeek(weekId) {
-    const weekLink = this.getWeekLinkForWeek(weekId);
+  amountPayedForWeek(week): number {
+    const weekLink = this.getWeekLinkForWeek(week);
 
     return weekLink != null ? weekLink.paid : 0;
   }
 
-  hasPayedForWeek(weekId) {
-    return this.amountPayedForWeek(weekId) > 0;
+  hasPayedForWeek(week) {
+    return this.amountPayedForWeek(week) > 0;
   }
 
-  getWeekLinkForWeek(weekId) {
-    if (this.me == null || this.me.weeks == null) {
-      return null;
-    }
-
-    return this.me.weeks.find(w => w.weekId === weekId);
+  getWeekLinkForWeek(week) {
+    return week.users.find(l => l.userId === this.me.userId);
   }
 }
