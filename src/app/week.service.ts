@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 
 import SubscribeToWeekMutation from './queries/SubscribeToWeekMutation';
 import PayAllMutation from './queries/PayAllMutation';
+import UpdateWeekMutation from './queries/UpdateWeekMutation';
 
 @Injectable()
 export class WeekService {
@@ -38,24 +39,31 @@ export class WeekService {
     return (this.getCurrentWeekId() - 1) === weekId;
   }
 
-  unSubToWeek(userId, weekId) {
+  unSubToWeek(userId: number, weekId: number) {
     return this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: { userId, weekId, slices: 0 }
     }).toPromise();
   }
 
-  subToWeek(userId, weekId) {
+  subToWeek(userId: number, weekId: number) {
     return this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,
       variables: { userId, weekId, slices: 1 }
     }).toPromise();
   }
 
-  markAllPaid(userId) {
+  markAllPaid(userId: number) {
     return this.apolloClient.mutate({
       mutation: PayAllMutation,
       variables: { userId }
+    }).toPromise();
+  }
+
+  updateWeek(weekId: number, shopperId: number, cost: number) {
+    return this.apolloClient.mutate({
+      mutation: UpdateWeekMutation,
+      variables: { weekId, shopperId, cost }
     }).toPromise();
   }
 }

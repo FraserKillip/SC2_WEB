@@ -36,21 +36,28 @@ export class ShoppingComponent implements OnInit {
         weekId
         cost
         costPerUser
+        shopper {
+          firstName
+          lastName
+        }
       }
     }
   `;
 
   weeksQuery: ApolloQueryObservable<any>;
+  currentWeekId: number;
   loading;
   me;
   primaryShopper;
-  weeks;
+  weeks: any[];
+  costs = {};
 
   constructor(private apolloClient: Apollo, private weekService: WeekService) { }
 
   ngOnInit() {
     this.loading = true;
 
+    this.currentWeekId = this.weekService.getCurrentWeekId();
     this.weeksQuery = this.apolloClient.watchQuery({ query: this.shoppingGql });
 
     this.weeksQuery.subscribe(({ data, loading }) => {
@@ -58,7 +65,15 @@ export class ShoppingComponent implements OnInit {
       this.me = data.me;
       this.primaryShopper = data.primaryShopper;
       this.weeks = sortBy(data.weeks, 'weekId').reverse();
+      this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
     });
+  }
+
+  updateWeek(week) {
+    this.loading = true;
+
+    this.weekService.updateWeek(week.weekId, this.primaryShopper.userId, this.costs[week.weekId])
+      .then(() => this.weeksQuery.refetch());
   }
 
 }

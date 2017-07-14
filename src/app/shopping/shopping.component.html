@@ -1,0 +1,42 @@
+<h2>Shopping</h2>
+
+<md-progress-spinner class="weeks-loading" *ngIf="loading" [mode]="'indeterminate'">
+</md-progress-spinner>
+
+<div *ngIf="!loading">
+  <table>
+    <thead>
+      <tr>
+        <th>Week</th>
+        <th>Shopper</th>
+        <th>Cost</th>
+        <th>Paid</th>
+        <th>Owed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let week of weeks">
+        <td [ngPlural]="currentWeekId - week.weekId">
+          <ng-template ngPluralCase="=0">This week</ng-template>
+          <ng-template ngPluralCase="=1">Last week</ng-template>
+          <ng-template ngPluralCase="other">{{currentWeekId - week.weekId}} weeks ago</ng-template>
+        </td>
+        <td>{{ week.shopper.firstName }} {{ week.shopper.lastName }}</td>
+        <td>
+          <form (submit)="updateWeek(week)">
+            <md-input-container>
+              <span mdPrefix>$ &nbsp;</span>
+              <input mdInput type="number" name="cost" step="0.01" [(ngModel)]="costs[week.weekId]" aria-label="Grocery cost for week">
+            </md-input-container>
+
+            <button type="submit" md-raised-button color="primary">
+              Update
+            </button>
+          </form>
+        </td>
+        <td>?</td>
+        <td>?</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
