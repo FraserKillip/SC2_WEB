@@ -16,7 +16,7 @@
     <p>{{ numMembersJoined(week) }} members joined</p>
     <p>Share per member: {{ week.costPerUser | currency:'NZD':true }}</p>
   </md-card-content>
-  <md-card-actions align="end">
+  <md-card-actions>
     <button md-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week.weekId)">JOIN</button>
     <button md-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week.weekId) && !hasPayedForWeek(week.weekId)">LEAVE</button>
     <button md-button disabled *ngIf="hasPayedForWeek(week.weekId)">PAID {{ amountPayedForWeek(week.weekId) | currency:'NZD':true }}</button>
