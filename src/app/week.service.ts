@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
+import 'rxjs/add/operator/toPromise';
 
 import SubscribeToWeekMutation from './queries/SubscribeToWeekMutation';
 import PayAllMutation from './queries/PayAllMutation';

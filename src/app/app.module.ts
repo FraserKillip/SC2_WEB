@@ -12,12 +12,11 @@ import { ApolloModule, defaultApolloClient } from 'apollo-angular';
 import { environment } from '../environments/environment';
 import { FacebookService } from './facebook/facebook.service';
 import { MaterialModule } from '@angular/material';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
 import { WeeksComponent } from './weeks/weeks.component';
-import { ReversePipe } from './reverse.pipe';
 import { WeekListComponent } from './week-list/week-list.component';
+import { ShoppingComponent } from './shopping/shopping.component';
 
 const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
 
@@ -69,11 +68,10 @@ export function client() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
     WeeksComponent,
-    ReversePipe,
     WeekListComponent,
+    ShoppingComponent,
   ],
   imports: [
     BrowserModule,
