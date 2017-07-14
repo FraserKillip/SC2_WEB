@@ -5,10 +5,10 @@
         <md-icon md-list-icon>input</md-icon>
         <span md-line>Logout</span>
       </a>
-      <a md-list-item routerLink="">
+      <a md-list-item routerLink="" (click)="sidenav.close()">
         Weeks
       </a>
-      <a md-list-item routerLink="shopping">
+      <a md-list-item routerLink="shopping" (click)="sidenav.close()">
         Shopping
       </a>
     </md-nav-list>
