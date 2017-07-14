@@ -12,8 +12,13 @@ import { WeekService } from '../week.service';
 })
 export class WeeksComponent implements OnInit {
 
+  // we don't use thisweek but if we don't request it then new weeks will
+  // never be created in the db.
   private weeksGql = gql`
     query {
+      thisweek {
+        weekId
+      }
       me {
         userId
         totalCost
