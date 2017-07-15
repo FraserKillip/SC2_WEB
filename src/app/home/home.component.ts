@@ -41,6 +41,11 @@ export class HomeComponent implements OnInit {
             avatarUrl
           }
         }
+        shopper {
+          firstName
+          lastName
+          avatarUrl
+        }
       }
     }
   `;

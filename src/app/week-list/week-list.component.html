@@ -1,7 +1,10 @@
 <div *ngFor="let week of weeks" class="week">
 <md-card class="week">
   <md-card-header>
-    <img md-card-avatar src="https://placeimg.com/40/40/animals" />
+    <img md-card-avatar
+      src="{{ week.shopper.avatarUrl }}"
+      alt="{{ week.shopper.firstName }} {{ week.shopper.lastName }}"
+      mdTooltip="{{ week.shopper.firstName }} {{ week.shopper.lastName }}" />
     <md-card-title>
       Week of {{ weekService.getStartOfWeek(weekService.weekIdToDate(week.weekId)) | date:'shortDate' }}
     </md-card-title>
