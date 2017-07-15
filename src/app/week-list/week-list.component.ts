@@ -37,14 +37,14 @@ export class WeekListComponent implements OnInit {
     return weekLink == null || weekLink.slices <= 0;
   }
 
-  amountPayedForWeek(week): number {
+  amountPaidForWeek(week): number {
     const weekLink = this.getWeekLinkForWeek(week);
 
     return weekLink != null ? weekLink.paid : 0;
   }
 
-  hasPayedForWeek(week) {
-    return this.amountPayedForWeek(week) > 0;
+  hasPaidForWeek(week) {
+    return this.amountPaidForWeek(week) > 0;
   }
 
   getWeekLinkForWeek(week) {

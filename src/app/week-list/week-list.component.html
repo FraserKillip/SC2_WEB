@@ -28,8 +28,8 @@
   </md-card-content>
   <md-card-actions>
     <button md-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week)">JOIN</button>
-    <button md-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week) && !hasPayedForWeek(week)">LEAVE</button>
-    <button md-button disabled *ngIf="hasPayedForWeek(week)">PAID {{ amountPayedForWeek(week) | currency:'NZD':true }}</button>
+    <button md-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week) && !hasPaidForWeek(week)">LEAVE</button>
+    <button md-button disabled *ngIf="hasPaidForWeek(week)">PAID {{ amountPaidForWeek(week) | currency:'NZD':true }}</button>
   </md-card-actions>
 </md-card>
 </div>
