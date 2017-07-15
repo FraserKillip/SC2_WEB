@@ -6,7 +6,7 @@
 
   <div *ngIf="!loading">
     <p>
-      Total owed to shoppers:
+      Total owed to shoppers (excluding this week and last week):
       <strong>{{ amountOwed() | currency:'NZD':true }}</strong>
     </p>
 
