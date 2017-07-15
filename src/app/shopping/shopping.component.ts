@@ -14,28 +14,24 @@ export class ShoppingComponent implements OnInit {
 
   private shoppingGql = gql`
     query {
-      me {
-        userId
-        totalCost
-        totalPaid
-        weeks {
-          weekId
-          userId
-          slices
-          paid
-        }
-      }
       primaryShopper {
         userId
-        firstName
-        lastName
-        bankDetails
-        bankName
       }
       weeks {
         weekId
         cost
-        costPerUser
+        users {
+          weekId
+          userId
+          slices
+          paid
+          user {
+            userId
+            firstName
+            lastName
+            avatarUrl
+          }
+        }
         shopper {
           firstName
           lastName
@@ -62,7 +58,6 @@ export class ShoppingComponent implements OnInit {
 
     this.weeksQuery.subscribe(({ data, loading }) => {
       this.loading = loading;
-      this.me = data.me;
       this.primaryShopper = data.primaryShopper;
       this.weeks = sortBy(data.weeks, 'weekId').reverse();
       this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
@@ -76,4 +71,19 @@ export class ShoppingComponent implements OnInit {
       .then(() => this.weeksQuery.refetch());
   }
 
+  totalPaidForWeek(week) {
+    return week.users.reduce((prev, u) => prev + u.paid, 0);
+  }
+
+  outstandingMembers(week) {
+    return week.users.filter(u => u.paid <= 0);
+  }
+
+  amountOwed() {
+    const pendingWeeks = this.weeks.filter(w => !this.weekService.isCurrentWeek(w.weekId) && !this.weekService.isPreviousWeek(w.weekId));
+    const totalCost = pendingWeeks.reduce((prev, w) => prev + w.cost, 0);
+    const totalOwed = totalCost - pendingWeeks.reduce((prev, w) => prev + this.totalPaidForWeek(w), 0);
+
+    return totalOwed;
+  }
 }
