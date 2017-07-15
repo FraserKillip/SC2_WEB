@@ -14,6 +14,11 @@ export class ShoppingComponent implements OnInit {
 
   private shoppingGql = gql`
     query {
+      me {
+        userId
+        firstName
+        lastName
+      }
       primaryShopper {
         userId
         firstName
@@ -54,7 +59,6 @@ export class ShoppingComponent implements OnInit {
   weeksQuery: ApolloQueryObservable<any>;
   currentWeekId: number;
   loading;
-  me;
   primaryShopper;
   weeks: any[];
   members: any[];
@@ -70,7 +74,7 @@ export class ShoppingComponent implements OnInit {
 
     this.weeksQuery.subscribe(({ data, loading }) => {
       this.loading = loading;
-      this.primaryShopper = data.primaryShopper;
+      this.primaryShopper = data.primaryShopper || data.me;
       this.weeks = this.ensureCurrentWeek(sortBy(data.weeks, 'weekId').reverse());
       this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
       this.members = sortBy(data.users, u => u.totalCost - u.totalPaid).reverse();

@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
     this.weeksQuery.subscribe(({ data, loading }) => {
       this.loading = loading;
       this.me = data.me;
-      this.primaryShopper = data.primaryShopper;
+      this.primaryShopper = data.primaryShopper || data.me;
 
       const sortedWeeks = sortBy(data.weeks, 'weekId').reverse();
 
