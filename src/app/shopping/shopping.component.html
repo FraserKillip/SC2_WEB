@@ -34,7 +34,7 @@
               <form (submit)="updateWeek(week)">
                 <md-input-container>
                   <span mdPrefix>$ &nbsp;</span>
-                  <input mdInput type="number" name="cost" step="0.01" [(ngModel)]="costs[week.weekId]" aria-label="Grocery cost for week">
+                  <input class="cost-input" mdInput type="number" name="cost" step="0.01" [(ngModel)]="costs[week.weekId]" aria-label="Grocery cost for week">
                 </md-input-container>
 
                 <button type="submit" md-raised-button color="primary">
