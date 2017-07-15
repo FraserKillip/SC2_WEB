@@ -16,6 +16,8 @@ export class ShoppingComponent implements OnInit {
     query {
       primaryShopper {
         userId
+        firstName
+        lastName
       }
       weeks {
         weekId
@@ -33,6 +35,7 @@ export class ShoppingComponent implements OnInit {
           }
         }
         shopper {
+          userId
           firstName
           lastName
         }
@@ -68,10 +71,26 @@ export class ShoppingComponent implements OnInit {
     this.weeksQuery.subscribe(({ data, loading }) => {
       this.loading = loading;
       this.primaryShopper = data.primaryShopper;
-      this.weeks = sortBy(data.weeks, 'weekId').reverse();
+      this.weeks = this.ensureCurrentWeek(sortBy(data.weeks, 'weekId').reverse());
       this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
       this.members = sortBy(data.users, u => u.totalCost - u.totalPaid).reverse();
     });
+  }
+
+  ensureCurrentWeek(weeks) {
+    const existingCurrentWeek = weeks.find(w => w.weekId === this.currentWeekId);
+
+    return existingCurrentWeek != null
+      ? weeks
+      : [
+        {
+          weekId: this.currentWeekId,
+          cost: 0,
+          users: [],
+          shopper: this.primaryShopper
+        },
+        ...weeks
+      ];
   }
 
   updateWeek(week) {
