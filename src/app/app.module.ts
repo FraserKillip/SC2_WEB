@@ -14,7 +14,7 @@ import { FacebookService } from './facebook/facebook.service';
 import { MaterialModule } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
-import { WeeksComponent } from './weeks/weeks.component';
+import { HomeComponent } from './home/home.component';
 import { WeekListComponent } from './week-list/week-list.component';
 import { ShoppingComponent } from './shopping/shopping.component';
 
@@ -69,7 +69,7 @@ export function client() {
   declarations: [
     AppComponent,
     LoginComponent,
-    WeeksComponent,
+    HomeComponent,
     WeekListComponent,
     ShoppingComponent,
   ],

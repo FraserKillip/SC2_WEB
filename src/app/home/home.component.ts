@@ -6,11 +6,11 @@ import gql from 'graphql-tag';
 import { WeekService } from '../week.service';
 
 @Component({
-  selector: 'sc-weeks',
-  templateUrl: './weeks.component.html',
-  styleUrls: ['./weeks.component.less']
+  selector: 'sc-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.less']
 })
-export class WeeksComponent implements OnInit {
+export class HomeComponent implements OnInit {
 
   // we don't use thisweek but if we don't request it then new weeks will
   // never be created in the db.
@@ -86,4 +86,5 @@ export class WeeksComponent implements OnInit {
     this.weekService.markAllPaid(this.me.userId)
       .then(() => this.refresh());
   }
+
 }
