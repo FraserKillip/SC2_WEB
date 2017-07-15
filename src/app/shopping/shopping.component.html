@@ -19,7 +19,7 @@
             <th>Cost</th>
             <th>Paid</th>
             <th>Owed</th>
-            <th>Members Outstanding</th>
+            <th class="members-outstanding">Members Outstanding</th>
           </tr>
         </thead>
         <tbody>
@@ -44,7 +44,7 @@
             </td>
             <td>{{ totalPaidForWeek(week) | currency:'NZD':true }}</td>
             <td [ngClass]="week.cost - totalPaidForWeek(week) > 0 ? 'unpaid' : 'paid'">{{ week.cost - totalPaidForWeek(week) | currency:'NZD':true }}</td>
-            <td>
+            <td class="members-outstanding">
               <md-list class="week-avatars">
                 <md-list-item *ngFor="let weekLink of outstandingMembers(week)">
                   <img md-list-avatar src="{{ weekLink.user.avatarUrl }}" alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
