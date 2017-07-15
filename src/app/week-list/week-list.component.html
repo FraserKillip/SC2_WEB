@@ -21,7 +21,7 @@
         <img md-list-avatar
           src="{{ weekLink.user.avatarUrl }}"
           alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
-          mdTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}">
+          mdTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }} ({{ weekLink.paid <= 0 ? 'unpaid' : 'paid' }})">
       </md-list-item>
     </md-list>
 
