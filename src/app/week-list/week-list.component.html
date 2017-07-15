@@ -15,6 +15,16 @@
     <p>Cost: {{ week.cost | currency:'NZD':true }}</p>
     <p>{{ week.users.length }} members joined</p>
     <p>Share per member: {{ week.costPerUser | currency:'NZD':true }}</p>
+
+    <md-list class="week-avatars">
+      <md-list-item *ngFor="let weekLink of week.users">
+        <img md-list-avatar
+          src="{{ weekLink.user.avatarUrl }}"
+          alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
+          mdTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}">
+      </md-list-item>
+    </md-list>
+
   </md-card-content>
   <md-card-actions>
     <button md-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week)">JOIN</button>

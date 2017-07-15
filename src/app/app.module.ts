@@ -3,12 +3,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloModule, defaultApolloClient } from 'apollo-angular';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloModule, defaultApolloClient } from 'apollo-angular';
 import { environment } from '../environments/environment';
 import { FacebookService } from './facebook/facebook.service';
 import { MaterialModule } from '@angular/material';

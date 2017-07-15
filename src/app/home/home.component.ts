@@ -39,6 +39,12 @@ export class HomeComponent implements OnInit {
           userId
           slices
           paid
+          user {
+            userId
+            firstName
+            lastName
+            avatarUrl
+          }
         }
       }
     }
