@@ -37,6 +37,14 @@ export class ShoppingComponent implements OnInit {
           lastName
         }
       }
+      users {
+			  userId
+			  firstName
+			  lastName
+			  avatarUrl
+			  totalCost
+			  totalPaid
+			}
     }
   `;
 
@@ -46,6 +54,7 @@ export class ShoppingComponent implements OnInit {
   me;
   primaryShopper;
   weeks: any[];
+  members: any[];
   costs = {};
 
   constructor(private apolloClient: Apollo, private weekService: WeekService) { }
@@ -61,6 +70,7 @@ export class ShoppingComponent implements OnInit {
       this.primaryShopper = data.primaryShopper;
       this.weeks = sortBy(data.weeks, 'weekId').reverse();
       this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
+      this.members = sortBy(data.users, u => u.totalCost - u.totalPaid).reverse();
     });
   }
 
@@ -81,6 +91,7 @@ export class ShoppingComponent implements OnInit {
 
   amountOwed() {
     const pendingWeeks = this.weeks.filter(w => !this.weekService.isCurrentWeek(w.weekId) && !this.weekService.isPreviousWeek(w.weekId));
+
     const totalCost = pendingWeeks.reduce((prev, w) => prev + w.cost, 0);
     const totalOwed = totalCost - pendingWeeks.reduce((prev, w) => prev + this.totalPaidForWeek(w), 0);
 
