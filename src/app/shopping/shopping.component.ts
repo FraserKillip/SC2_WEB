@@ -87,9 +87,9 @@ export class ShoppingComponent implements OnInit {
   }
 
   addWeekIfDoesntExist(weeks, weekId) {
-    const existingCurrentWeek = weeks.find(w => w.weekId === weekId);
+    const existingWeek = weeks.find(w => w.weekId === weekId);
 
-    return existingCurrentWeek != null
+    return existingWeek != null
       ? weeks
       : [
         {
