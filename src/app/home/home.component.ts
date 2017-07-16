@@ -42,6 +42,7 @@ export class HomeComponent implements OnInit {
           }
         }
         shopper {
+          userId
           firstName
           lastName
           avatarUrl
