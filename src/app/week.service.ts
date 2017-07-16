@@ -31,14 +31,6 @@ export class WeekService {
     return copy;
   };
 
-  isCurrentWeek(weekId: number): boolean {
-    return this.getCurrentWeekId() === weekId;
-  }
-
-  isPreviousWeek(weekId: number): boolean {
-    return (this.getCurrentWeekId() - 1) === weekId;
-  }
-
   isWeekDue(weekId) {
     return weekId < (this.getCurrentWeekId() - 1);
   }
