@@ -1,20 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import { ApolloModule, defaultApolloClient } from 'apollo-angular';
+import 'hammerjs';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloModule, defaultApolloClient } from 'apollo-angular';
 import { environment } from '../environments/environment';
 import { FacebookService } from './facebook/facebook.service';
 import { MaterialModule } from '@angular/material';
-import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
+import { HomeComponent } from './home/home.component';
+import { WeekListComponent } from './week-list/week-list.component';
+import { ShoppingComponent } from './shopping/shopping.component';
 
 const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
 
@@ -66,8 +69,10 @@ export function client() {
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     LoginComponent,
+    HomeComponent,
+    WeekListComponent,
+    ShoppingComponent,
   ],
   imports: [
     BrowserModule,
@@ -82,6 +87,7 @@ export function client() {
     FacebookService,
     WeekService,
     defaultApolloClient(client),
+    { provide: LOCALE_ID, useValue: 'languages' in navigator && navigator['languages'].length > 0 ? navigator['languages'][0] : 'en-NZ' },
   ],
   bootstrap: [AppComponent]
 })

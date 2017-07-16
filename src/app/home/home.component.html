@@ -1,96 +1,40 @@
-<md-sidenav-container fullscreen>
-  <md-sidenav #sidenav>
-    <md-nav-list>
-      <a md-list-item (click)="logout()">
-        <md-icon md-list-icon>input</md-icon>
-        <span md-line>Logout</span>
-      </a>
-    </md-nav-list>
-  </md-sidenav>
-  <md-toolbar color="primary">
-    <button md-icon-button (click)="sidenav.open()">
-      <svg style="width:24px;height:24px" viewBox="0 0 24 24">
-        <path fill="currentColor" d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"/>
-      </svg>
-    </button>
-    Sandwich Club 2
-  </md-toolbar>
+<md-progress-spinner
+  class="weeks-loading"
+  *ngIf="loading"
+  [mode]="'indeterminate'">
+</md-progress-spinner>
 
-  <div class="content">
-    <md-card>
-      <md-card-header *ngIf="me | async">
-        <img md-card-avatar [src]="(me | async)?.data.me.avatarUrl">
-        <md-card-title>{{(me | async)?.data.me.firstName}} {{(me | async)?.data.me.lastName}}</md-card-title>
-        <md-card-subtitle>Header subtitle</md-card-subtitle>
-      </md-card-header>
-      <md-card-content>
-        You owe: {{ ((me | async)?.data.me.totalCost - (me | async)?.data.me.totalPaid) | currency:'NZD':true }}
-        <span *ngIf="primaryShopper">
-          <br />
-          To {{ primaryShopper.firstName }}<span *ngIf="primaryShopper.bankName || primaryShopper.bankDetails">: {{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</span>
-        </span>
-      </md-card-content>
-      <md-card-actions align="end">
-      <button md-button (click)="payAll()">PAY ALL</button>
-      </md-card-actions>
-    </md-card>
+<div *ngIf="!loading" class="home">
+  <section class="weeks-list">
+    <h2>Active Weeks</h2>
 
-    <md-card *ngIf="week">
-      <md-card-header>
-        <md-card-title>Week Details -
-          <span *ngIf="currentWeekId === weekId">
-            this week
-          </span>
-          <span *ngIf="currentWeekId > weekId">
-            {{currentWeekId - weekId}} week(s) ago
-          </span>
-          <span *ngIf="currentWeekId === weekId - 1">
-            next week
-          </span>
-          <span *ngIf="currentWeekId === weekId - 2">
-            week after next
-          </span>
-          <span *ngIf="currentWeekId < weekId - 2">
-            WTF are you doing? this is the future!!
-          </span> -
-          {{ weekService.getStartOfWeek(weekService.weekIdToDate(weekId)) | date:'dd/MM/yy' }}
-        </md-card-title>
-      </md-card-header>
-      <md-card-content>
-        <span>Cost: {{ week?.cost | currency:'NZD':true }}</span> <br>
-        <span *ngIf="thisWeekSub?.slices === 1">Your share: {{ week?.cost / week?.users.length | currency:'NZD':true }}</span> <br>
-        <span
-          *ngIf="week?.shopper">Shopper: {{ week?.shopper?.firstName }}</span>
-        <span *ngIf="!week?.shopper">No shopper set</span>
-      </md-card-content>
-      <md-card-actions align="end">
-        <button md-button (click)="lastWeek()">PREVIOUS WEEK</button>
-        <button md-button (click)="nextWeek()">NEXT WEEK</button>
-        <button md-button (click)="subToWeek()" *ngIf="thisWeekSub == null || thisWeekSub?.slices === 0">JOIN</button>
-        <button md-button (click)="unsubToWeek()" *ngIf="thisWeekSub?.slices === 1">LEAVE</button>
-      </md-card-actions>
-    </md-card>
+    <sc-week-list
+      [weeks]="activeWeeks"
+      [me]="me"
+      (onChange)="refresh($event)">
+    </sc-week-list>
+  </section>
 
-    <h2>People in Week</h2>
+  <section class="weeks-list">
+    <h2>Due Weeks</h2>
 
-    <md-list class="weeksUsers">
-      <md-list-item class="weeksUsers-user" *ngFor=" let user of week?.users">
-        <img md-list-avatar [src]="user.user.avatarUrl">
-        <p md-line>
-          {{user.user.firstName}} {{user.user.lastName}}
-        </p>
-      </md-list-item>
-    </md-list>
+    <div class="weeks-header">
+      <button md-raised-button color="primary" class="weeks-paidButton" (click)="markAllPaid()" [disabled]="isAllPaid()">Mark all paid</button>
 
-    <h2>Lars Area</h2>
+      <p class="weeks-payTo" *ngIf="!isAllPaid()">
+        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':true }}</strong>
+        to {{ primaryShopper.firstName}}
+        <strong class="weeks-payToAccount">{{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</strong>
+      </p>
+      <p class="weeks-payTo" *ngIf="isAllPaid()">
+        You are all settled up.
+      </p>
+    </div>
 
-    <form (submit)="updateCost()">
-      <md-input-container>
-        <input type="number" name="cost" mdInput [(ngModel)]="cost" placeholder="Groceries Cost" step="0.01">
-        <span md-prefix>$&nbsp;</span>
-      </md-input-container>
-
-      <button md-raised-button type="submit">Update Cost</button>
-    </form>
-  </div>
-</md-sidenav-container>
+    <sc-week-list
+      [weeks]="dueWeeks"
+      [me]="me"
+      (onChange)="refresh($event)">
+    </sc-week-list>
+  </section>
+</div>

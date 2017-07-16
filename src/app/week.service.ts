@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import 'rxjs/add/operator/toPromise';
+
+import SubscribeToWeekMutation from './queries/SubscribeToWeekMutation';
+import PayAllMutation from './queries/PayAllMutation';
+import UpdateWeekMutation from './queries/UpdateWeekMutation';
 
 @Injectable()
 export class WeekService {
+  constructor(private apolloClient: Apollo) { }
+
   weekIdToDate(weekId: number): Date {
     // seconds = weekId * days in a week * hours in a day * minutes in an hours * seconds in a minute * milliseconds in a second
     const seconds = weekId * 7 * 24 * 60 * 60 * 1000;
@@ -22,4 +30,36 @@ export class WeekService {
     copy.setDate(copy.getDate() - ((copy.getDay() + 6) % 7));
     return copy;
   };
+
+  isWeekDue(weekId) {
+    return weekId < (this.getCurrentWeekId() - 1);
+  }
+
+  unSubToWeek(userId: number, weekId: number) {
+    return this.apolloClient.mutate({
+      mutation: SubscribeToWeekMutation,
+      variables: { userId, weekId, slices: 0 }
+    }).toPromise();
+  }
+
+  subToWeek(userId: number, weekId: number) {
+    return this.apolloClient.mutate({
+      mutation: SubscribeToWeekMutation,
+      variables: { userId, weekId, slices: 1 }
+    }).toPromise();
+  }
+
+  markAllPaid(userId: number) {
+    return this.apolloClient.mutate({
+      mutation: PayAllMutation,
+      variables: { userId }
+    }).toPromise();
+  }
+
+  updateWeek(weekId: number, shopperId: number, cost: number) {
+    return this.apolloClient.mutate({
+      mutation: UpdateWeekMutation,
+      variables: { weekId, shopperId, cost }
+    }).toPromise();
+  }
 }

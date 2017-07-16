@@ -1,1 +1,29 @@
-<router-outlet></router-outlet>
+<md-sidenav-container fullscreen>
+  <md-sidenav #sidenav>
+    <md-nav-list>
+      <a md-list-item (click)="logout()">
+        <md-icon md-list-icon>input</md-icon>
+        <span md-line>Logout</span>
+      </a>
+      <a md-list-item routerLink="" (click)="sidenav.close()">
+        <md-icon md-list-icon>date_range</md-icon>
+        <span md-line>Weeks</span>
+      </a>
+      <a md-list-item routerLink="shopping" (click)="sidenav.close()">
+        <md-icon md-list-icon>shopping_cart</md-icon>
+        <span md-line>Shopping</span>
+      </a>
+    </md-nav-list>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <button md-icon-button (click)="sidenav.open()">
+      <md-icon>menu</md-icon>
+    </button>
+    Sandwich Club 2
+  </md-toolbar>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+
+</md-sidenav-container>

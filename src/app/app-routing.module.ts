@@ -4,13 +4,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './auth-guard.service';
 import { NoAuthGuard } from './no-auth-guard.service';
 import { HomeComponent } from './home/home.component';
+import { ShoppingComponent } from './shopping/shopping.component';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'weeks', pathMatch: 'full' },
-    { path: 'weeks', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'week/:weekId', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+    { path: 'shopping', component: ShoppingComponent, canActivate: [AuthGuard] },
     { path: 'login', component: LoginComponent, canActivate: [NoAuthGuard] },
 ];
 

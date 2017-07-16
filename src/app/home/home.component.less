@@ -1,17 +1,39 @@
-.content {
-  padding: 16px;
-}
+.home {
+  margin: 24px auto;
+  max-width: 600px;
 
-md-card {
-  margin: 0 16px 16px 0;
-  min-width: 350px;
-}
-
-.weeksUsers {
-  display: flex;
-  flex-wrap: wrap;
-
-  &-user {
-    width: 250px;
+  @media(max-width: 648px) {
+    margin: 24px;
   }
+}
+
+.weeks-loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.weeks-list {
+  margin-bottom: 24px;
+}
+
+.weeks-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.weeks-paidButton {
+  flex: 0 0 auto;
+  margin-right: 8px;
+}
+
+.weeks-payTo {
+  margin: 0;
+}
+
+.weeks-payToAccount {
+  white-space: nowrap;
 }

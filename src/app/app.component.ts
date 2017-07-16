@@ -14,4 +14,11 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.fbService.init();
   }
+
+  logout() {
+    this.fbService.logout()
+      .toPromise().then(() => {
+        this.router.navigate(['login']);
+      });
+  }
 }
