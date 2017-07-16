@@ -39,6 +39,10 @@ export class WeekService {
     return (this.getCurrentWeekId() - 1) === weekId;
   }
 
+  isWeekDue(weekId) {
+    return weekId < (this.getCurrentWeekId() - 1);
+  }
+
   unSubToWeek(userId: number, weekId: number) {
     return this.apolloClient.mutate({
       mutation: SubscribeToWeekMutation,

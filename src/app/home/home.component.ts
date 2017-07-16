@@ -71,17 +71,13 @@ export class HomeComponent implements OnInit {
 
       const sortedWeeks = sortBy(data.weeks, 'weekId').reverse();
 
-      this.activeWeeks = sortedWeeks.filter(w => !this.isDueWeek(w.weekId));
-      this.dueWeeks = sortedWeeks.filter(w => this.isDueWeek(w.weekId));
+      this.activeWeeks = sortedWeeks.filter(w => !this.weekService.isWeekDue(w.weekId));
+      this.dueWeeks = sortedWeeks.filter(w => this.weekService.isWeekDue(w.weekId));
     });
   }
 
   refresh() {
     this.weeksQuery.refetch();
-  }
-
-  isDueWeek(weekId: number) {
-    return !this.weekService.isCurrentWeek(weekId) && !this.weekService.isPreviousWeek(weekId);
   }
 
   isAllPaid() {

@@ -118,7 +118,7 @@ export class ShoppingComponent implements OnInit {
   }
 
   amountOwed() {
-    const pendingWeeks = this.weeks.filter(w => !this.weekService.isCurrentWeek(w.weekId) && !this.weekService.isPreviousWeek(w.weekId));
+    const pendingWeeks = this.weeks.filter(w => this.weekService.isWeekDue(w.weekId));
 
     const totalCost = pendingWeeks.reduce((prev, w) => prev + w.cost, 0);
     const totalOwed = totalCost - pendingWeeks.reduce((prev, w) => prev + this.totalPaidForWeek(w), 0);
