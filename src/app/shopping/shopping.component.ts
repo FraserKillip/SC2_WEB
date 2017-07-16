@@ -46,13 +46,13 @@ export class ShoppingComponent implements OnInit {
         }
       }
       users {
-			  userId
-			  firstName
-			  lastName
-			  avatarUrl
-			  totalCost
-			  totalPaid
-			}
+        userId
+        firstName
+        lastName
+        avatarUrl
+        totalCost
+        totalPaid
+      }
     }
   `;
 
