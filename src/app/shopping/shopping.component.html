@@ -25,6 +25,7 @@
         <tbody>
           <tr *ngFor="let week of weeks">
             <td [ngPlural]="currentWeekId - week.weekId">
+              <ng-template ngPluralCase="=-1">Next week</ng-template>
               <ng-template ngPluralCase="=0">This week</ng-template>
               <ng-template ngPluralCase="=1">Last week</ng-template>
               <ng-template ngPluralCase="other">{{currentWeekId - week.weekId}} weeks ago</ng-template>

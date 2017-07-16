@@ -75,20 +75,25 @@ export class ShoppingComponent implements OnInit {
     this.weeksQuery.subscribe(({ data, loading }) => {
       this.loading = loading;
       this.primaryShopper = data.primaryShopper || data.me;
-      this.weeks = this.ensureCurrentWeek(sortBy(data.weeks, 'weekId').reverse());
+
+      this.weeks = this.addWeekIfDoesntExist(
+        this.addWeekIfDoesntExist(sortBy(data.weeks, 'weekId').reverse(), this.currentWeekId),
+        this.currentWeekId + 1
+      );
+
       this.costs = this.weeks.reduce((prev, w) => { prev[w.weekId] = w.cost; return prev; }, {});
       this.members = sortBy(data.users, u => u.totalCost - u.totalPaid).reverse();
     });
   }
 
-  ensureCurrentWeek(weeks) {
-    const existingCurrentWeek = weeks.find(w => w.weekId === this.currentWeekId);
+  addWeekIfDoesntExist(weeks, weekId) {
+    const existingCurrentWeek = weeks.find(w => w.weekId === weekId);
 
     return existingCurrentWeek != null
       ? weeks
       : [
         {
-          weekId: this.currentWeekId,
+          weekId: weekId,
           cost: 0,
           users: [],
           shopper: this.primaryShopper

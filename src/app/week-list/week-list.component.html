@@ -9,6 +9,7 @@
       Week of {{ weekService.getStartOfWeek(weekService.weekIdToDate(week.weekId)) | date:'shortDate' }}
     </md-card-title>
     <md-card-subtitle [ngPlural]="currentWeekId - week.weekId">
+      <ng-template ngPluralCase="=-1">next week</ng-template>
       <ng-template ngPluralCase="=0">this week</ng-template>
       <ng-template ngPluralCase="=1">last week</ng-template>
       <ng-template ngPluralCase="other">{{currentWeekId - week.weekId}} weeks ago</ng-template>
