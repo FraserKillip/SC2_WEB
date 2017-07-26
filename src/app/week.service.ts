@@ -17,19 +17,19 @@ export class WeekService {
     const date = this.getStartOfWeek(new Date(seconds));
 
     return date;
-  };
+  }
 
   getCurrentWeekId(): number {
     const startOfWeek = this.getStartOfWeek(new Date());
 
     return Math.ceil(startOfWeek.getTime() / 1000 / 60 / 60 / 24 / 7);
-  };
+  }
 
   getStartOfWeek(week: Date): Date {
     const copy = new Date(week.valueOf());
     copy.setDate(copy.getDate() - ((copy.getDay() + 6) % 7));
     return copy;
-  };
+  }
 
   isWeekDue(weekId) {
     return weekId < (this.getCurrentWeekId() - 1);
