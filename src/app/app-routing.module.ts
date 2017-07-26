@@ -20,4 +20,4 @@ const routes: Routes = [
     providers: [AuthGuard, NoAuthGuard],
 })
 
-export class AppRoutingModule { };
+export class AppRoutingModule { }
