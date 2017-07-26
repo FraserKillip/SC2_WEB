@@ -17,7 +17,6 @@ import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
 import { HomeComponent } from './home/home.component';
 import { WeekListComponent } from './week-list/week-list.component';
-import { ShoppingComponent } from './shopping/shopping.component';
 
 const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
 
@@ -72,7 +71,6 @@ export function client() {
     LoginComponent,
     HomeComponent,
     WeekListComponent,
-    ShoppingComponent,
   ],
   imports: [
     BrowserModule,
