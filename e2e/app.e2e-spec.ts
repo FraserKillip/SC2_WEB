@@ -1,14 +1,14 @@
-import { SandwichClubPage } from './app.po';
+import { AppPage } from './app.po';
 
 describe('sandwich-club App', () => {
-  let page: SandwichClubPage;
+  let page: AppPage;
 
   beforeEach(() => {
-    page = new SandwichClubPage();
+    page = new AppPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('sc works!');
+    expect(page.getParagraphText()).toEqual('Welcome to sc!');
   });
 });
