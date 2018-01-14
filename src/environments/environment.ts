@@ -5,6 +5,6 @@
 
 export const environment = {
   production: false,
-  apiAddress: 'http://localhost:5000',
+  apiAddress: 'https://dev.sandwichclub.tk',
   fbAppId: '1616066795351311'
 };

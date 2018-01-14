@@ -4,9 +4,23 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MatIconModule, MatSidenavModule, MatToolbarModule, MatListModule, MatProgressSpinnerModule, MatButtonModule, MatCardModule, MatTooltipModule, MatInputModule } from '@angular/material';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
-import { ApolloModule, defaultApolloClient } from 'apollo-angular';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import {
+  MatIconModule,
+  MatSidenavModule,
+  MatToolbarModule,
+  MatListModule,
+  MatProgressSpinnerModule,
+  MatButtonModule,
+  MatCardModule,
+  MatTooltipModule,
+  MatInputModule
+} from '@angular/material';
+import { ApolloModule, Apollo } from 'apollo-angular';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
+import { setContext } from 'apollo-link-context';
+import { onError } from 'apollo-link-error';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
@@ -19,66 +33,22 @@ import { WeekService } from './week.service';
 import { HomeComponent } from './home/home.component';
 import { WeekListComponent } from './week-list/week-list.component';
 
-const networkInterface = createNetworkInterface({ uri: `${environment.apiAddress}/graphql` });
-
-networkInterface.use([{
-  applyMiddleware(req, next) {
-    if (!req.options.headers) {
-      req.options.headers = {};  // Create the header object if needed.
-    }
-    // get the authentication token from local storage if it exists
-    req.options.headers['Sandwich-Auth-Token'] = localStorage.getItem('token') || null;
-    next();
-  }
-}]);
-
-networkInterface.useAfter([{
-  applyAfterware({response}, next) {
-    if (response.status === 401) {
-      window.location.pathname = '/login';
-    }
-    next();
-  }
-}]);
-
-export function client() {
-  return new ApolloClient({
-    networkInterface: networkInterface,
-    dataIdFromObject: (o: any) => {
-      let key;
-      switch (o.__typename) {
-        case 'user':
-          key = `${o.__typename}-${o.userId},`;
-          break;
-        case 'week':
-          key = `${o.__typename}-${o.weekId},`;
-          break;
-        case 'weekUserLink':
-          key = `${o.__typename}-${o.weekId}-${o.userId},`;
-          break;
-        default:
-          key = `${o.__typename}-${o.id},`;
-          break;
-      }
-
-      return key;
-    }
-  });
-}
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    WeekListComponent,
+    WeekListComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    HttpClientModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {
+      enabled: environment.production
+    }),
     MatIconModule,
     MatSidenavModule,
     MatToolbarModule,
@@ -89,14 +59,64 @@ export function client() {
     MatTooltipModule,
     MatInputModule,
     AppRoutingModule,
-    ApolloModule.withClient(client),
+    ApolloModule,
+    HttpLinkModule
   ],
   providers: [
     FacebookService,
     WeekService,
-    defaultApolloClient(client),
-    { provide: LOCALE_ID, useValue: 'languages' in navigator && navigator['languages'].length > 0 ? navigator['languages'][0] : 'en-NZ' },
+    {
+      provide: LOCALE_ID,
+      useValue:
+        'languages' in navigator && navigator['languages'].length > 0
+          ? navigator['languages'][0]
+          : 'en-NZ'
+    }
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(apollo: Apollo, httpLink: HttpLink) {
+    const http = httpLink.create({ uri: `${environment.apiAddress}/graphql` });
+
+    const middleware = setContext(() => ({
+      headers: new HttpHeaders().set(
+        'Sandwich-Auth-Token',
+        localStorage.getItem('token') || ''
+      )
+    }));
+
+    const error = onError(({ networkError, graphQLErrors }) => {
+      console.error(networkError);
+
+      window.location.pathname = '/login';
+    });
+
+    const link = middleware.concat(error).concat(http);
+
+    apollo.create({
+      link,
+      cache: new InMemoryCache({
+        dataIdFromObject: (o: any) => {
+          let key;
+          switch (o.__typename) {
+            case 'user':
+              key = `${o.__typename}-${o.userId},`;
+              break;
+            case 'week':
+              key = `${o.__typename}-${o.weekId},`;
+              break;
+            case 'weekUserLink':
+              key = `${o.__typename}-${o.weekId}-${o.userId},`;
+              break;
+            default:
+              key = `${o.__typename}-${o.id},`;
+              break;
+          }
+
+          return key;
+        }
+      })
+    });
+  }
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Apollo, ApolloQueryObservable } from 'apollo-angular';
+import { Apollo } from 'apollo-angular';
 import { sortBy } from 'lodash';
 import gql from 'graphql-tag';
 
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     }
   `;
 
-  weeksQuery: ApolloQueryObservable<any>;
+  weeksQuery;
   loading;
   me;
   primaryShopper;
@@ -65,7 +65,7 @@ export class HomeComponent implements OnInit {
 
     this.weeksQuery = this.apolloClient.watchQuery({ query: this.weeksGql });
 
-    this.weeksQuery.subscribe(({ data, loading }) => {
+    this.weeksQuery.valueChanges.subscribe(({ data, loading }) => {
       this.loading = loading;
       this.me = data.me;
       this.primaryShopper = data.primaryShopper || data.me;
