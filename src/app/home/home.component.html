@@ -11,7 +11,7 @@
     <sc-week-list
       [weeks]="activeWeeks"
       [me]="me"
-      (onChange)="refresh($event)">
+      (weekChanged)="refresh($event)">
     </sc-week-list>
   </section>
 
@@ -34,7 +34,7 @@
     <sc-week-list
       [weeks]="dueWeeks"
       [me]="me"
-      (onChange)="refresh($event)">
+      (weekChanged)="refresh($event)">
     </sc-week-list>
   </section>
 </div>

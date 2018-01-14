@@ -11,7 +11,7 @@ export class WeekListComponent implements OnInit {
 
   @Input() weeks;
   @Input() me;
-  @Output() onChange = new EventEmitter();
+  @Output() weekChanged = new EventEmitter();
 
   currentWeekId: number;
 
@@ -23,12 +23,12 @@ export class WeekListComponent implements OnInit {
 
   unSubToWeek(weekId) {
     this.weekService.unSubToWeek(this.me.userId, weekId)
-      .then(() => this.onChange.emit());
+      .then(() => this.weekChanged.emit());
   }
 
   subToWeek(weekId) {
     this.weekService.subToWeek(this.me.userId, weekId)
-      .then(() => this.onChange.emit());
+      .then(() => this.weekChanged.emit());
   }
 
   isSubbedToWeek(week) {
