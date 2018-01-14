@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import {
   MatIconModule,
@@ -44,7 +43,6 @@ import { WeekListComponent } from './week-list/week-list.component';
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpModule,
     HttpClientModule,
     ServiceWorkerModule.register('/ngsw-worker.js', {
       enabled: environment.production
