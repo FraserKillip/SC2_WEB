@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, LOCALE_ID } from '@angular/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { MatIconModule, MatSidenavModule, MatToolbarModule, MatListModule, MatProgressSpinnerModule, MatButtonModule, MatCardModule, MatTooltipModule, MatInputModule } from '@angular/material';
 import ApolloClient, { createNetworkInterface } from 'apollo-client';
 import { ApolloModule, defaultApolloClient } from 'apollo-angular';
 import 'hammerjs';
@@ -12,7 +14,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { environment } from '../environments/environment';
 import { FacebookService } from './facebook/facebook.service';
-import { MaterialModule } from '@angular/material';
 import { LoginComponent } from './login/login.component';
 import { WeekService } from './week.service';
 import { HomeComponent } from './home/home.component';
@@ -77,9 +78,18 @@ export function client() {
     BrowserAnimationsModule,
     FormsModule,
     HttpModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    MatIconModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatCardModule,
+    MatTooltipModule,
+    MatInputModule,
     AppRoutingModule,
     ApolloModule.withClient(client),
-    MaterialModule,
   ],
   providers: [
     FacebookService,

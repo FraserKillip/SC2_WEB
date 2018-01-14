@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
+import { MatListModule, MatInputModule, MatProgressSpinnerModule, MatTooltipModule, MatButtonModule } from "@angular/material";
 
 import { ShoppingRoutingModule } from './shopping-routing.module';
 import { ShoppingComponent } from './shopping.component';
@@ -10,8 +10,12 @@ import { ShoppingComponent } from './shopping.component';
   imports: [
     CommonModule,
     FormsModule,
-    MaterialModule,
-    ShoppingRoutingModule
+    ShoppingRoutingModule,
+    MatListModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+    MatButtonModule,
   ],
   declarations: [ShoppingComponent]
 })

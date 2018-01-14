@@ -1,39 +1,39 @@
 <div *ngFor="let week of weeks" class="week">
-<md-card class="week">
-  <md-card-header>
-    <img md-card-avatar
+<mat-card class="week">
+  <mat-card-header>
+    <img mat-card-avatar
       src="{{ week.shopper.avatarUrl }}"
       alt="{{ week.shopper.firstName }} {{ week.shopper.lastName }}"
-      mdTooltip="{{ week.shopper.firstName }} {{ week.shopper.lastName }}" />
-    <md-card-title>
+      matTooltip="{{ week.shopper.firstName }} {{ week.shopper.lastName }}" />
+    <mat-card-title>
       Week of {{ weekService.getStartOfWeek(weekService.weekIdToDate(week.weekId)) | date:'shortDate' }}
-    </md-card-title>
-    <md-card-subtitle [ngPlural]="currentWeekId - week.weekId">
+    </mat-card-title>
+    <mat-card-subtitle [ngPlural]="currentWeekId - week.weekId">
       <ng-template ngPluralCase="=-1">next week</ng-template>
       <ng-template ngPluralCase="=0">this week</ng-template>
       <ng-template ngPluralCase="=1">last week</ng-template>
       <ng-template ngPluralCase="other">{{currentWeekId - week.weekId}} weeks ago</ng-template>
-    </md-card-subtitle>
-  </md-card-header>
-  <md-card-content>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
     <p>Cost: {{ week.cost | currency:'NZD':true }}</p>
     <p>{{ week.users.length }} members joined</p>
     <p>Share per member: {{ week.costPerUser | currency:'NZD':true }}</p>
 
-    <md-list class="week-avatars">
-      <md-list-item *ngFor="let weekLink of week.users">
-        <img md-list-avatar
+    <mat-list class="week-avatars">
+      <mat-list-item *ngFor="let weekLink of week.users">
+        <img mat-list-avatar
           src="{{ weekLink.user.avatarUrl }}"
           alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
-          mdTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }} ({{ weekLink.paid <= 0 ? 'unpaid' : 'paid' }})">
-      </md-list-item>
-    </md-list>
+          matTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }} ({{ weekLink.paid <= 0 ? 'unpaid' : 'paid' }})">
+      </mat-list-item>
+    </mat-list>
 
-  </md-card-content>
-  <md-card-actions>
-    <button md-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week)">JOIN</button>
-    <button md-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week) && !hasPaidForWeek(week)">LEAVE</button>
-    <button md-button disabled *ngIf="hasPaidForWeek(week)">PAID {{ amountPaidForWeek(week) | currency:'NZD':true }}</button>
-  </md-card-actions>
-</md-card>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week)">JOIN</button>
+    <button mat-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week) && !hasPaidForWeek(week)">LEAVE</button>
+    <button mat-button disabled *ngIf="hasPaidForWeek(week)">PAID {{ amountPaidForWeek(week) | currency:'NZD':true }}</button>
+  </mat-card-actions>
+</mat-card>
 </div>

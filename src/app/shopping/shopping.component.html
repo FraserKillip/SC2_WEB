@@ -1,6 +1,6 @@
 <div class="shopping">
-  <md-progress-spinner class="weeks-loading" *ngIf="loading" [mode]="'indeterminate'">
-  </md-progress-spinner>
+  <mat-progress-spinner class="weeks-loading" *ngIf="loading" mode="indeterminate">
+  </mat-progress-spinner>
 
   <section *ngIf="!loading">
     <h2>Shopping</h2>
@@ -33,12 +33,12 @@
             <td>{{ week.shopper.firstName }} {{ week.shopper.lastName }}</td>
             <td>
               <form (submit)="updateWeek(week)">
-                <md-input-container>
-                  <span mdPrefix>$ &nbsp;</span>
-                  <input class="cost-input" mdInput type="number" name="cost" step="0.01" [(ngModel)]="costs[week.weekId]" aria-label="Grocery cost for week">
-                </md-input-container>
+                <mat-input-container>
+                  <span matPrefix>$ &nbsp;</span>
+                  <input class="cost-input" matInput type="number" name="cost" step="0.01" [(ngModel)]="costs[week.weekId]" aria-label="Grocery cost for week">
+                </mat-input-container>
 
-                <button type="submit" md-raised-button color="primary">
+                <button type="submit" mat-raised-button color="primary">
                   Update
                 </button>
               </form>
@@ -46,12 +46,12 @@
             <td>{{ totalPaidForWeek(week) | currency:'NZD':true }}</td>
             <td [ngClass]="week.cost - totalPaidForWeek(week) > 0 ? 'unpaid' : 'paid'">{{ week.cost - totalPaidForWeek(week) | currency:'NZD':true }}</td>
             <td class="members-outstanding">
-              <md-list class="week-avatars">
-                <md-list-item *ngFor="let weekLink of outstandingMembers(week)">
-                  <img md-list-avatar src="{{ weekLink.user.avatarUrl }}" alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
-                    mdTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}">
-                </md-list-item>
-              </md-list>
+              <mat-list class="week-avatars">
+                <mat-list-item *ngFor="let weekLink of outstandingMembers(week)">
+                  <img mat-list-avatar src="{{ weekLink.user.avatarUrl }}" alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
+                    matTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}">
+                </mat-list-item>
+              </mat-list>
             </td>
           </tr>
         </tbody>
