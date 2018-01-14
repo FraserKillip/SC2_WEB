@@ -16,9 +16,9 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>Cost: {{ week.cost | currency:'NZD':true }}</p>
+    <p>Cost: {{ week.cost | currency:'NZD':'symbol-narrow' }}</p>
     <p>{{ week.users.length }} members joined</p>
-    <p>Share per member: {{ week.costPerUser | currency:'NZD':true }}</p>
+    <p>Share per member: {{ week.costPerUser | currency:'NZD':'symbol-narrow' }}</p>
 
     <mat-list class="week-avatars">
       <mat-list-item *ngFor="let weekLink of week.users">
@@ -33,7 +33,7 @@
   <mat-card-actions>
     <button mat-button (click)="subToWeek(week.weekId)" *ngIf="isSubbedToWeek(week)">JOIN</button>
     <button mat-button (click)="unSubToWeek(week.weekId)" *ngIf="!isSubbedToWeek(week) && !hasPaidForWeek(week)">LEAVE</button>
-    <button mat-button disabled *ngIf="hasPaidForWeek(week)">PAID {{ amountPaidForWeek(week) | currency:'NZD':true }}</button>
+    <button mat-button disabled *ngIf="hasPaidForWeek(week)">PAID {{ amountPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</button>
   </mat-card-actions>
 </mat-card>
 </div>

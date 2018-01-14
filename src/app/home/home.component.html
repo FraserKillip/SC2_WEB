@@ -22,7 +22,7 @@
       <button mat-raised-button color="primary" class="weeks-paidButton" (click)="markAllPaid()" [disabled]="isAllPaid()">Mark all paid</button>
 
       <p class="weeks-payTo" *ngIf="!isAllPaid()">
-        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':true }}</strong>
+        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':'symbol-narrow' }}</strong>
         to {{ primaryShopper.firstName}}
         <strong class="weeks-payToAccount">{{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</strong>
       </p>

@@ -8,7 +8,7 @@
     <div>
       <p>
         Total owed to shoppers (only for due weeks):
-        <strong>{{ amountOwed() | currency:'NZD':true }}</strong>
+        <strong>{{ amountOwed() | currency:'NZD':'symbol-narrow' }}</strong>
       </p>
 
       <table>
@@ -43,8 +43,8 @@
                 </button>
               </form>
             </td>
-            <td>{{ totalPaidForWeek(week) | currency:'NZD':true }}</td>
-            <td [ngClass]="week.cost - totalPaidForWeek(week) > 0 ? 'unpaid' : 'paid'">{{ week.cost - totalPaidForWeek(week) | currency:'NZD':true }}</td>
+            <td>{{ totalPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</td>
+            <td [ngClass]="week.cost - totalPaidForWeek(week) > 0 ? 'unpaid' : 'paid'">{{ week.cost - totalPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</td>
             <td class="members-outstanding">
               <mat-list class="week-avatars">
                 <mat-list-item *ngFor="let weekLink of outstandingMembers(week)">
@@ -72,7 +72,7 @@
       <tbody>
         <tr *ngFor="let member of members">
           <td>{{ member.firstName }} {{ member.lastName }}</td>
-          <td>{{ member.totalCost - member.totalPaid | currency:'NZD':true }}</td>
+          <td>{{ member.totalCost - member.totalPaid | currency:'NZD':'symbol-narrow' }}</td>
         </tr>
       </tbody>
     </table>
