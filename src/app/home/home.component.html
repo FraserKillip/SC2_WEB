@@ -1,8 +1,8 @@
-<md-progress-spinner
+<mat-progress-spinner
   class="weeks-loading"
   *ngIf="loading"
-  [mode]="'indeterminate'">
-</md-progress-spinner>
+  mode="indeterminate">
+</mat-progress-spinner>
 
 <div *ngIf="!loading" class="home">
   <section class="weeks-list">
@@ -11,7 +11,7 @@
     <sc-week-list
       [weeks]="activeWeeks"
       [me]="me"
-      (onChange)="refresh($event)">
+      (weekChanged)="refresh($event)">
     </sc-week-list>
   </section>
 
@@ -19,10 +19,10 @@
     <h2>Due Weeks</h2>
 
     <div class="weeks-header">
-      <button md-raised-button color="primary" class="weeks-paidButton" (click)="markAllPaid()" [disabled]="isAllPaid()">Mark all paid</button>
+      <button mat-raised-button color="primary" class="weeks-paidButton" (click)="markAllPaid()" [disabled]="isAllPaid()">Mark all paid</button>
 
       <p class="weeks-payTo" *ngIf="!isAllPaid()">
-        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':true }}</strong>
+        Pay <strong>{{ me.totalCost - me.totalPaid | currency:'NZD':'symbol-narrow' }}</strong>
         to {{ primaryShopper.firstName}}
         <strong class="weeks-payToAccount">{{ primaryShopper.bankName }} {{ primaryShopper.bankDetails }}</strong>
       </p>
@@ -34,7 +34,7 @@
     <sc-week-list
       [weeks]="dueWeeks"
       [me]="me"
-      (onChange)="refresh($event)">
+      (weekChanged)="refresh($event)">
     </sc-week-list>
   </section>
 </div>
