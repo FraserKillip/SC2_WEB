@@ -18,8 +18,8 @@
             <th>Shopper</th>
             <th>Cost</th>
             <th>Paid</th>
-            <th>Owed</th>
-            <th class="members-outstanding">Members Outstanding</th>
+            <th>Owed Per User</th>
+            <th class="members-outstanding">Members</th>
           </tr>
         </thead>
         <tbody>
@@ -44,10 +44,10 @@
               </form>
             </td>
             <td>{{ totalPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</td>
-            <td [ngClass]="week.cost - totalPaidForWeek(week) > 0 ? 'unpaid' : 'paid'">{{ week.cost - totalPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</td>
+            <td>{{ week.costPerUser | currency:'NZD':'symbol-narrow' }}</td>
             <td class="members-outstanding">
               <mat-list class="week-avatars">
-                <mat-list-item *ngFor="let weekLink of outstandingMembers(week)">
+                <mat-list-item *ngFor="let weekLink of week.users">
                   <img mat-list-avatar src="{{ weekLink.user.avatarUrl }}" alt="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}"
                     matTooltip="{{ weekLink.user.firstName }} {{ weekLink.user.lastName }}">
                 </mat-list-item>
