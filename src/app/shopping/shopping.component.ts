@@ -52,6 +52,7 @@ export class ShoppingComponent implements OnInit {
         avatarUrl
         totalCost
         totalPaid
+        totalOwed
       }
     }
   `;
@@ -118,11 +119,6 @@ export class ShoppingComponent implements OnInit {
   }
 
   amountOwed() {
-    const pendingWeeks = this.weeks.filter(w => this.weekService.isWeekDue(w.weekId));
-
-    const totalCost = pendingWeeks.reduce((prev, w) => prev + w.cost, 0);
-    const totalOwed = totalCost - pendingWeeks.reduce((prev, w) => prev + this.totalPaidForWeek(w), 0);
-
-    return totalOwed;
+    return members.reduce((member, amount) => amount + member.totalOwed, 0);
   }
 }
