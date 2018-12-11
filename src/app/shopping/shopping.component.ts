@@ -27,6 +27,7 @@ export class ShoppingComponent implements OnInit {
       weeks {
         weekId
         cost
+        costPerUser
         users {
           weekId
           userId
