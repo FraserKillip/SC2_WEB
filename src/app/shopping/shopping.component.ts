@@ -111,14 +111,6 @@ export class ShoppingComponent implements OnInit {
       .then(() => this.weeksQuery.refetch());
   }
 
-  totalPaidForWeek(week) {
-    return week.users.reduce((prev, u) => prev + u.paid, 0);
-  }
-
-  outstandingMembers(week) {
-    return week.users.filter(u => u.paid <= 0);
-  }
-
   amountOwed() {
     return members.reduce((member, amount) => amount + member.totalOwed, 0);
   }
