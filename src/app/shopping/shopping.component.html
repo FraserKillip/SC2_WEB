@@ -72,7 +72,7 @@
       <tbody>
         <tr *ngFor="let member of members">
           <td>{{ member.firstName }} {{ member.lastName }}</td>
-          <td>{{ member.totalCost - member.totalPaid | currency:'NZD':'symbol-narrow' }}</td>
+          <td>{{ member.totalOwed | currency:'NZD':'symbol-narrow' }}</td>
         </tr>
       </tbody>
     </table>
