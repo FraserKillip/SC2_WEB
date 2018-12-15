@@ -17,7 +17,6 @@
             <th>Week</th>
             <th>Shopper</th>
             <th>Cost</th>
-            <th>Paid</th>
             <th>Owed Per User</th>
             <th class="members-outstanding">Members</th>
           </tr>
@@ -43,7 +42,6 @@
                 </button>
               </form>
             </td>
-            <td>{{ totalPaidForWeek(week) | currency:'NZD':'symbol-narrow' }}</td>
             <td>{{ week.costPerUser | currency:'NZD':'symbol-narrow' }}</td>
             <td class="members-outstanding">
               <mat-list class="week-avatars">
