@@ -27,6 +27,7 @@ export class ShoppingComponent implements OnInit {
       weeks {
         weekId
         cost
+        costPerUser
         users {
           weekId
           userId
@@ -52,6 +53,7 @@ export class ShoppingComponent implements OnInit {
         avatarUrl
         totalCost
         totalPaid
+        totalOwed
       }
     }
   `;
@@ -109,20 +111,7 @@ export class ShoppingComponent implements OnInit {
       .then(() => this.weeksQuery.refetch());
   }
 
-  totalPaidForWeek(week) {
-    return week.users.reduce((prev, u) => prev + u.paid, 0);
-  }
-
-  outstandingMembers(week) {
-    return week.users.filter(u => u.paid <= 0);
-  }
-
   amountOwed() {
-    const pendingWeeks = this.weeks.filter(w => this.weekService.isWeekDue(w.weekId));
-
-    const totalCost = pendingWeeks.reduce((prev, w) => prev + w.cost, 0);
-    const totalOwed = totalCost - pendingWeeks.reduce((prev, w) => prev + this.totalPaidForWeek(w), 0);
-
-    return totalOwed;
+    return this.members.reduce((member, amount) => amount + member.totalOwed, 0);
   }
 }
