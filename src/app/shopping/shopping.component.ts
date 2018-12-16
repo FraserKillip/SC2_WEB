@@ -112,6 +112,6 @@ export class ShoppingComponent implements OnInit {
   }
 
   amountOwed() {
-    return this.members.reduce((member, amount) => amount + member.totalOwed, 0);
+    return this.members.reduce((amount, member) => amount + member.totalOwed, 0);
   }
 }
